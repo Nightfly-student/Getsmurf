@@ -7,12 +7,17 @@
             <h2 class="text-2xl font-semibold text-center">Basic</h2>
         </div>
 
-        <div class="flex w-fit mx-auto pt-2">
+        <div class="flex w-fit mx-auto mr-24 text-red-500 pt-5">
+            <span class="text-sm">$</span>
+            <p class="text-base font-semibold line-through">6.99</p>
+        </div>
+
+        <div class="flex w-fit mx-auto">
             <span>$</span>
             <p class="text-5xl font-semibold">3.99</p>
         </div>
 
-        <div class="w-fit mx-auto pt-5">
+        <div class="w-fit mx-auto pt-7">
             <ul class="space-y-4 font-semibold">
                 <li>
                     <div class="flex gap-3">

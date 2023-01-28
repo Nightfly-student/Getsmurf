@@ -1,0 +1,200 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  previewFeatures = ["fullTextSearch", "fullTextIndex"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id String @id @default(uuid())
+  email String @unique
+  password String
+  role Role @default(USER)
+
+  refreshToken RefreshToken[]
+
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model RefreshToken {
+  id String @id @default(uuid()) 
+  token String @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  userId String @unique
+  user   User @relation(fields: [userId], references: [id])
+}
+
+model Product {
+  id String @id @default(uuid())
+
+  slug String @unique
+
+  name String
+  description String
+  price Float
+  image String
+  category String
+
+  uniqueIdentifier String @unique
+  region Region @default(EUW)
+  quantity Int
+
+  Accounts Account[]
+  Orders Order[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Account {
+  id String @id @default(uuid())
+
+  LicenseId String @unique
+  license License @relation(fields: [LicenseId], references: [id])
+
+  Champions ChampionItem[]
+  Skins SkinItem[]
+  be Int
+
+  status AccountStatus @default(AVAILABLE)
+
+  ProductSlug String
+  Product Product @relation(fields: [ProductSlug], references: [slug])
+
+  OrderId String?
+  Order Order? @relation(fields: [OrderId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model ChampionItem {
+  id String @id @default(uuid())
+
+  championId String
+  champion Champion @relation(fields: [championId], references: [id])
+
+  accountId String
+  account Account @relation(fields: [accountId], references: [id])
+}
+
+model Champion {
+  id String @id @default(uuid())
+
+  ChampionItem ChampionItem[]
+
+  name String
+  identifier String @unique
+  image String
+}
+
+model SkinItem {
+  id String @id @default(uuid())
+
+  skinId String
+  skin Skin @relation(fields: [skinId], references: [id])
+
+  accountId String
+  account Account @relation(fields: [accountId], references: [id])
+}
+
+model Skin {
+  id String @id @default(uuid())
+
+  SkinItem SkinItem[]
+
+  name String
+  identifier String @unique
+  image String
+  rarity String
+  key String
+}
+
+model License {
+  id String @id @default(uuid())
+
+  Account Account?
+
+  username String
+  password String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Order {
+  id String @id @default(uuid())
+
+  billingEmail String
+
+  productId String
+  product Product @relation(fields: [productId], references: [slug])
+
+  accounts Account[]
+
+  quantity Int
+  status OrderStatus @default(CREATED)
+
+  paymentSessionId String? @unique
+  paymentSession PaymentSession? @relation(fields: [paymentSessionId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model PaymentSession {
+  id String @id @default(uuid())
+
+  sessionId String @unique
+  paymentMethod PaymentMethod @default(STRIPE)
+  order Order?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum Role {
+  ADMIN
+  USER
+}
+
+enum Region {
+  EUW
+  EUNE
+  NA
+  OCE
+  TR
+  RU
+  LAN
+  LAS
+  BR
+}
+
+enum AccountStatus {
+  AVAILABLE
+  PENDING
+  REFUND
+  GIVEAWAY
+  SOLD
+}
+
+enum OrderStatus {
+  CREATED
+  PENDING
+  PAID
+  REFUND
+  CANCELLED
+}
+
+enum PaymentMethod {
+  STRIPE
+}

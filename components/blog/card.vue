@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-zinc-800 max-w-lg p-7">
+    <div class="bg-zinc-800 md:max-w-sm xl:max-w-md 3xl:max-w-lg p-7">
         <div class="bg-gradient-to-b from-black/100 to-red-500/25">
             <img class="opacity-70"
                 src="https://res.cloudinary.com/dxns0vltg/image/upload/v1674478109/s2i0wu4tkm6zpep25jt8.jpg"

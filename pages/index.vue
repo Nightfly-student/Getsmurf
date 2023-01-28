@@ -6,11 +6,11 @@
             <Accounts />
         </section>
 
-        <section class="pt-36">
+        <section class="pt-36 mx-0 lg:mx-4 xl:mx-10">
             <BlockBuy />
         </section>
 
-        <section class="pt-36">
+        <section class="pt-36 mx-0 lg:mx-4 xl:mx-10">
             <BlockAbout />
         </section>
 

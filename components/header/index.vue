@@ -1,7 +1,7 @@
 <template>
     <header class="bg-zinc-800 rounded-t-20">
         <div class="grid grid-cols-12 items-center">
-            <div class="col-span-12 lg:col-span-5 p-20">
+            <div class="col-span-12 lg:col-span-5 p-10 lg:p-20">
                 <h1 class="text-4xl lg:text-5xl xl:text-6xl font-bold">Affordable League of Legends <span
                         class="text-red-600">Smurfs</span>
                 </h1>
