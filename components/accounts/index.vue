@@ -2,11 +2,31 @@
     <div>
         <h2 class="text-center text-2xl font-semibold">Cheap Accounts</h2>
         <div class="pt-10">
-            <AccountsRegions />
+            <AccountsRegions @region="updateRegion" />
         </div>
 
         <div class="pt-10">
-            <AccountsLists />
+            <AccountsLists :products="products" />
         </div>
     </div>
 </template>
+
+<script lang="ts" setup>
+import { Region } from '@prisma/client';
+
+const selectedRegion = ref<Region>('EUW')
+const products = ref<any>([])
+
+const updateRegion = async (region: Region) => {
+    selectedRegion.value = region
+    await getProductsByRegion(region)
+}
+
+const getProductsByRegion = async (region: Region) => {
+    const data = await $fetch(`/api/products?region=${region}`)
+    products.value = data.products
+}
+
+await getProductsByRegion(selectedRegion.value)
+
+</script>

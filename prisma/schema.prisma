@@ -46,7 +46,7 @@ model Product {
 
   uniqueIdentifier String @unique
   region Region @default(EUW)
-  quantity Int
+  quantity Int @default(0)
 
   Accounts Account[]
   Orders Order[]

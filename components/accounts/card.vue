@@ -1,20 +1,19 @@
 <template>
     <div class="bg-zinc-800 p-2 w-full">
-        <img class="custom-logo mx-16"
-            src="https://res.cloudinary.com/dxns0vltg/image/upload/v1674812533/spelly_krlygn.png" alt="spelly" />
+        <img class="custom-logo mx-16" :src="product.image" :alt="product.name" />
 
         <div>
-            <h2 class="text-2xl font-semibold text-center">Basic</h2>
+            <h2 class="text-2xl font-semibold text-center">{{ product.category }}</h2>
         </div>
 
         <div class="flex w-fit mx-auto mr-24 text-red-500 pt-5">
             <span class="text-sm">$</span>
-            <p class="text-base font-semibold line-through">6.99</p>
+            <p class="text-base font-semibold line-through">{{ product.price + 2 }}</p>
         </div>
 
         <div class="flex w-fit mx-auto">
             <span>$</span>
-            <p class="text-5xl font-semibold">3.99</p>
+            <p class="text-5xl font-semibold">{{ product.price }}</p>
         </div>
 
         <div class="w-fit mx-auto pt-7">
@@ -22,7 +21,7 @@
                 <li>
                     <div class="flex gap-3">
                         <CheckCircleIcon class="text-red-500 w-6" />
-                        <p>40k Blue Essence</p>
+                        <p>{{ product.slug.replace(product.region.toLowerCase(), '') }}+ Blue Essence</p>
                     </div>
                 </li>
                 <li>
@@ -53,8 +52,13 @@
         </div>
 
         <div class="pt-5 pb-3 px-2">
-            <button class="bg-red-600 hover:bg-red-700 text-xl w-full p-3 px-6 rounded-xl shadow-md">
+            <button v-if="product.quantity !== 0"
+                class="bg-red-600 hover:bg-red-700 text-xl w-full p-3 px-6 rounded-xl shadow-md">
                 Buy Now
+            </button>
+            <button v-else disabled
+                class="bg-red-600 disabled:bg-red-600/25 hover:bg-red-700 text-xl w-full p-3 px-6 rounded-xl shadow-md">
+                Out of Stock
             </button>
         </div>
     </div>
@@ -62,6 +66,14 @@
 
 <script lang="ts" setup>
 import { CheckCircleIcon } from '@heroicons/vue/24/outline'
+
+const props = defineProps({
+    product: {
+        type: Object,
+        required: true
+    }
+})
+
 </script>
 
 <style scoped>

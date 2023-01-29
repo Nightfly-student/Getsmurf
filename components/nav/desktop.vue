@@ -17,14 +17,46 @@
                 <li>
                     Blog
                 </li>
+                <li v-if="logged && user?.role === 'ADMIN'">
+                    <NuxtLink to="/admin">
+                        Admin Panel
+                    </NuxtLink>
+                </li>
             </ul>
         </div>
         <div class="shrink">
             <ul class="flex items-center lg:gap-5 select-none">
-                <li>
-                    Login/Register
+                <li v-if="!logged">
+                    <NuxtLink to="/login">
+                        Login/Register
+                    </NuxtLink>
+                </li>
+                <li v-else>
+                    <button @click="handleLogout">
+                        Logout
+                    </button>
                 </li>
             </ul>
         </div>
     </nav>
 </template>
+
+<script lang="ts" setup>
+const props = defineProps({
+    logged: {
+        type: Boolean,
+        required: true,
+    },
+})
+
+const { logout, useAuthUser } = useAuth()
+
+const user = computed(() => useAuthUser().value)
+
+const handleLogout = () => {
+    logout()
+}
+
+
+
+</script>

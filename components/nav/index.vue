@@ -1,7 +1,14 @@
 <template>
     <div>
-        <NavDesktop class="hidden lg:block" />
+        <NavDesktop :logged="logged" class="hidden lg:block" />
 
-        <NavMobile class="block lg:hidden" />
+        <NavMobile :logged="logged" class="block lg:hidden" />
     </div>
 </template>
+
+<script lang="ts" setup>
+const { isLogged } = useAuth()
+
+const logged = computed(() => isLogged())
+
+</script>
