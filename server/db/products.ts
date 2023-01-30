@@ -16,6 +16,28 @@ export const createProduct = async (data: any) => {
     })
 }
 
+export const getProducts = async () => {
+    return prisma.product.findMany({
+        select: {
+            slug: true,
+            name: true,
+            price: true,
+            image: true,
+            category: true,
+            region: true,
+            quantity: true,
+        },
+        orderBy: [
+            {
+                price: 'asc'
+            },
+            {
+                region: 'asc'
+            }
+        ]
+    })
+}
+
 export const getProductsByRegion = async (region: Region) => {
     return prisma.product.findMany({
         where: {

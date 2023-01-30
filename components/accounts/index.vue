@@ -12,7 +12,7 @@
 </template>
 
 <script lang="ts" setup>
-import { Region } from '@prisma/client';
+import type { Region } from '~~/helpers/enums';
 
 const selectedRegion = ref<Region>('EUW')
 const products = ref<any>([])

@@ -1,0 +1,1 @@
+export type Region = "EUW" | "EUNE" | "NA" | "OCE" | "TR" | "RU" | "LAN" | "LAS" | "BR"

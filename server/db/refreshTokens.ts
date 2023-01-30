@@ -17,7 +17,16 @@ export const removeRefreshToken = async (token: string) => {
 }
 
 export const createRefreshToken = async (data: { token: string, userId: string }) => {
-    return prisma.refreshToken.create({
-        data
+    return prisma.refreshToken.upsert({
+        where: {
+            userId: data.userId
+        },
+        update: {
+            token: data.token
+        },
+        create: {
+            token: data.token,
+            userId: data.userId
+        }
     })
 }
