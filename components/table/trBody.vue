@@ -1,5 +1,5 @@
 <template>
-    <tr class="border-b-2 last:border-b-0 border-stone-800"
+    <tr class="border-b-2 last:border-b-0 border-zinc-800"
         :class="{ 'hover:bg-stone-800 cursor-pointer': props.hasHover }">
         <slot />
     </tr>

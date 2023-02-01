@@ -23,6 +23,9 @@ export default defineEventHandler(async (event) => {
     }
 
     return {
-        products
+        products: products.map(product => {
+            (product.Accounts as any) = product.Accounts.length
+            return product
+        })
     }
 })

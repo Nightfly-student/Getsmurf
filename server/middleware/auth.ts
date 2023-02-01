@@ -6,7 +6,9 @@ import { getUserById } from '../db/users';
 export default defineEventHandler(async (event) => {
     const endpoints = [
         '/api/auth/user',
-        '/api/products/new'
+        '/api/products/new',
+        '/api/products/admin/product',
+        '/api/accounts/admin'
     ]
 
     const isHandledByThisMiddleware = endpoints.some(endpoint => {

@@ -25,7 +25,11 @@ export const getProducts = async () => {
             image: true,
             category: true,
             region: true,
-            quantity: true,
+            Accounts: {
+                select: {
+                    id: true,
+                },
+            },
         },
         orderBy: [
             {
@@ -50,10 +54,94 @@ export const getProductsByRegion = async (region: Region) => {
             image: true,
             category: true,
             region: true,
-            quantity: true,
+            Accounts: {
+                select: {
+                    id: true,
+                },
+            },
         },
         orderBy: {
             price: 'asc'
         }
     })
+}
+
+export const getProductBySlug = async (slug: string) => {
+    return prisma.product.findUnique({
+        where: {
+            slug
+        },
+        select: {
+            slug: true,
+            name: true,
+            price: true,
+            image: true,
+            category: true,
+            region: true,
+            description: true,
+            uniqueIdentifier: true,
+            Accounts: {
+                select: {
+                    id: true,
+                },
+            },
+        }
+    })
+}
+
+export const getImportantInfo = async (slug: string) => {
+    return prisma.$transaction([
+        prisma.product.findUnique({
+            where: {
+                slug
+            },
+            select: {
+                slug: true,
+                name: true,
+                price: true,
+                image: true,
+                category: true,
+                region: true,
+                description: true,
+                uniqueIdentifier: true,
+                updatedAt: true,
+                AvgCostOfAccount: true,
+                Accounts: {
+                    select: {
+                        id: true,
+                    },
+                },
+            }
+        }),
+        prisma.account.count({
+            where: {
+                AND: [
+                    {
+                        Product: {
+                            slug
+                        },
+                    },
+                    {
+                        status: 'SOLD'
+                    }
+                ]
+            }
+        }),
+        prisma.order.findMany({
+            where: {
+                product: {
+                    slug
+                }
+            },
+            select: {
+                id: true,
+                billingEmail: true,
+                status: true,
+            },
+            take: 4,
+            orderBy: {
+                updatedAt: 'desc'
+            }
+        })
+    ])
 }

@@ -1,4 +1,5 @@
 import { getProducts } from "~~/server/db/products";
+import { sendError } from "h3";
 
 export default defineEventHandler(async (event) => {
     const products = await getProducts()
@@ -10,6 +11,9 @@ export default defineEventHandler(async (event) => {
     }
 
     return {
-        products
+        products: products.map(product => {
+            (product.Accounts as any) = product.Accounts.length
+            return product
+        })
     }
 })

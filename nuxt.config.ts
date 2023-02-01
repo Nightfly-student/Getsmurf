@@ -11,6 +11,7 @@ export default defineNuxtConfig({
         cloudName: process.env.CLOUDINARY_NAME,
         cloudApi: process.env.CLOUDINARY_API,
         cloudApiSecret: process.env.CLOUDINARY_API_SECRET,
+        aesKey: process.env.AES_CRYPTION_KEY,
         public: {
             appUrl: process.env.APP_URL,
         }

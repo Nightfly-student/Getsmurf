@@ -32,7 +32,7 @@
                             </NavTab>
                         </li>
                         <li>
-                            <NavTab link="/admin/services">
+                            <NavTab link="/admin/licences">
                                 <template v-slot:icon>
                                     <UserIcon />
                                 </template>

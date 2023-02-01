@@ -46,7 +46,8 @@ model Product {
 
   uniqueIdentifier String @unique
   region Region @default(EUW)
-  quantity Int @default(0)
+
+  AvgCostOfAccount Float @default(1.00)
 
   Accounts Account[]
   Orders Order[]
@@ -58,10 +59,9 @@ model Product {
 model Account {
   id String @id @default(uuid())
 
-  LicenseId String @unique
-  license License @relation(fields: [LicenseId], references: [id])
+  licenseUsername String @unique
+  license License @relation(fields: [licenseUsername], references: [username], onDelete: Cascade)
 
-  Champions ChampionItem[]
   Skins SkinItem[]
   be Int
 
@@ -73,26 +73,20 @@ model Account {
   OrderId String?
   Order Order? @relation(fields: [OrderId], references: [id])
 
+  SupplierId String
+  Supplier Supplier @relation(fields: [SupplierId], references: [id])
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
 
-model ChampionItem {
-  id String @id @default(uuid())
-
-  championId String
-  champion Champion @relation(fields: [championId], references: [id])
-
-  accountId String
-  account Account @relation(fields: [accountId], references: [id])
-}
 
 model Champion {
   id String @id @default(uuid())
 
-  ChampionItem ChampionItem[]
+  Skins Skin[]
 
-  name String
+  name String @unique
   identifier String @unique
   image String
 }
@@ -100,11 +94,11 @@ model Champion {
 model SkinItem {
   id String @id @default(uuid())
 
-  skinId String
-  skin Skin @relation(fields: [skinId], references: [id])
+  skinName String
+  skin Skin @relation(fields: [skinName], references: [name])
 
   accountId String
-  account Account @relation(fields: [accountId], references: [id])
+  account Account @relation(fields: [accountId], references: [id], onDelete: Cascade)
 }
 
 model Skin {
@@ -112,11 +106,12 @@ model Skin {
 
   SkinItem SkinItem[]
 
-  name String
+  name String @unique
   identifier String @unique
   image String
   rarity String
   key String
+  champion Champion @relation(fields: [key], references: [name])
 }
 
 model License {
@@ -124,7 +119,7 @@ model License {
 
   Account Account?
 
-  username String
+  username String @unique
   password String
 
   createdAt DateTime @default(now())
@@ -141,7 +136,9 @@ model Order {
 
   accounts Account[]
 
+  total Float
   quantity Int
+
   status OrderStatus @default(CREATED)
 
   paymentSessionId String? @unique
@@ -157,6 +154,18 @@ model PaymentSession {
   sessionId String @unique
   paymentMethod PaymentMethod @default(STRIPE)
   order Order?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Supplier {
+  id String @id @default(uuid())
+
+  name String @unique
+  source String
+
+  Accounts Account[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -181,6 +190,7 @@ enum Region {
 
 enum AccountStatus {
   AVAILABLE
+  BANNED
   PENDING
   REFUND
   GIVEAWAY

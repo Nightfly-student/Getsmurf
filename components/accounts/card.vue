@@ -1,6 +1,8 @@
 <template>
     <div class="bg-zinc-800 p-2 w-full">
-        <img class="custom-logo mx-16" :src="product.image" :alt="product.name" />
+        <div class="w-fit mx-auto">
+            <img class="custom-logo mx-16" :src="product.image" :alt="product.name" />
+        </div>
 
         <div>
             <h2 class="text-2xl font-semibold text-center">{{ product.category }}</h2>
@@ -52,7 +54,7 @@
         </div>
 
         <div class="pt-5 pb-3 px-2">
-            <button v-if="product.quantity !== 0"
+            <button v-if="product.Accounts !== 0"
                 class="bg-red-600 hover:bg-red-700 text-xl w-full p-3 px-6 rounded-xl shadow-md">
                 Buy Now
             </button>
