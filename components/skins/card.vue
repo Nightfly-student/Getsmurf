@@ -1,21 +1,30 @@
 <template>
-    <div class="bg-zinc-800 p-2 w-full max-w-100 lg:max-w-sm">
-        <div class="w-fit mx-auto">
-            <img class="custom-logo mx-16" :src="product.image" :alt="product.name" />
+    <div class="bg-zinc-800 p-2 max-w-100 lg:max-w-xs">
+        <div class="w-full md:w-fit mx-auto relative">
+            <div v-if="skin.rarity !== 'kNoRarity'" class="absolute right-0 m-3 py-2 rounded-20 px-5" :class="{
+                'bg-red-500': skin.rarity === 'kLegendary',
+                'bg-blue-500': skin.rarity === 'kEpic',
+                'bg-green-500': skin.rarity === 'kRare',
+                'bg-purple-500': skin.rarity === 'kMythic',
+                'bg-yellow-500': skin.rarity === 'kCommon',
+            }">
+                {{ skin.rarity.replace('k', '') }}
+            </div>
+            <img class="md:h-full h-64 w-full object-cover object-top" :src="skin.image" :alt="skin.name" />
         </div>
 
-        <div>
-            <h2 class="text-2xl font-semibold text-center">{{ product.category }}</h2>
+        <div class="w-44 md:w-full md:max-w-xs">
+            <h2 class="text-center truncate text-xl py-2 font-semibold">{{ skin.name }}</h2>
         </div>
 
         <div class="flex w-fit mx-auto mr-24 text-red-500 pt-5">
             <span class="text-sm">$</span>
-            <p class="text-base font-semibold line-through">{{ product.price + 2 }}</p>
+            <p class="text-base font-semibold line-through">{{ (price + 2).toFixed(2) }}</p>
         </div>
 
         <div class="flex w-fit mx-auto">
             <span>$</span>
-            <p class="text-5xl font-semibold">{{ product.price }}</p>
+            <p class="text-5xl font-semibold">{{ price.toFixed(2) }}</p>
         </div>
 
         <div class="w-fit mx-auto pt-7">
@@ -23,7 +32,7 @@
                 <li>
                     <div class="flex gap-3">
                         <CheckCircleIcon class="text-red-500 w-6" />
-                        <p>{{ product.slug.replace(product.region.toLowerCase(), '') }}+ Blue Essence</p>
+                        <p>30-60k+ Blue Essence</p>
                     </div>
                 </li>
                 <li>
@@ -54,7 +63,7 @@
         </div>
 
         <div class="pt-5 pb-3 px-2">
-            <button v-if="product.Accounts !== 0"
+            <button v-if="isAvailable()"
                 class="bg-red-600 hover:bg-red-700 text-xl w-full p-3 px-6 rounded-xl shadow-md">
                 Buy Now
             </button>
@@ -70,11 +79,30 @@
 import { CheckCircleIcon } from '@heroicons/vue/24/outline'
 
 const props = defineProps({
-    product: {
+    skin: {
+        type: Object,
+        required: true
+    },
+    availableAccounts: {
         type: Object,
         required: true
     }
 })
+
+const price = props.skin.rarity === 'kLegendary' ? 14.99 : props.skin.rarity === 'kEpic' ? 10.49 : props.skin.rarity === 'kRare' ? 9.99 : props.skin.rarity === 'kMythic' ? 12.49 : 8.95
+
+const isAvailable = () => {
+
+    for (let i = 0; i < props.availableAccounts.length; i++) {
+        for (let j = 0; j < props.availableAccounts[i].Skins.length; j++) {
+            if (props.availableAccounts[i].Skins[j].skin.name === props.skin.name) {
+                return true
+            }
+        }
+    }
+
+    return false
+}
 
 </script>
 

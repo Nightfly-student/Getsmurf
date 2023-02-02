@@ -1,7 +1,7 @@
 <template>
     <div>
-        <div class="flex flex-wrap gap-10 justify-center" v-if="products.length !== 0">
-            <div v-for="product in products">
+        <div class="flex flex-wrap gap-10 justify-center px-5" v-if="products.length !== 0">
+            <div v-for="product in products" class="grow">
                 <AccountsCard :product="(product as Object)" />
             </div>
         </div>

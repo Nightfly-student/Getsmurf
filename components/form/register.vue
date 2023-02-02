@@ -29,7 +29,7 @@
                         :disabled="!formMeta.valid || data.loading"
                         class="text-white w-full disabled:bg-red-500/20 font-bold bg-red-500 hover:bg-red-500/75 p-3 rounded-20">
                         <IconsSpinner class="w-5 h-5" :loading="data.loading" />
-                        Register to Trainy
+                        Register to GetSmurf
                     </button>
                 </div>
             </div>

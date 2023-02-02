@@ -25,7 +25,7 @@
                         :disabled="!formMeta.valid || data.loading"
                         class="text-white w-full disabled:bg-red-500/20 font-bold bg-red-500 hover:bg-red-500/75 p-3 rounded-20">
                         <IconsSpinner class="w-5 h-5" :loading="data.loading" />
-                        Sign into Trainy
+                        Sign into GetSmurf
                     </button>
                     <div class="text-center pb-3 pt-2 text-gray-500 hover:text-gray-300 cursor-pointer">
                         <!-- TODO: FORGOT PASSWORD -->

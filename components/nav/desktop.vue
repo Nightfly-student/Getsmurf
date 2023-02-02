@@ -9,10 +9,14 @@
         <div class="grow">
             <ul class="flex items-center lg:gap-20 py-4 text-lg text-gray-200">
                 <li>
-                    Home
+                    <NuxtLink to="/">
+                        Home
+                    </NuxtLink>
                 </li>
                 <li>
-                    Skin Accounts
+                    <NuxtLink to="/lol-skins-account">
+                        Skin Accounts
+                    </NuxtLink>
                 </li>
                 <li>
                     Blog
