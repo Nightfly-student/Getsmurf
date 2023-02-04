@@ -8,18 +8,39 @@
         </div>
         <div class="flex flex-wrap gap-5 justify-center">
             <div class="w-fit md:mx-0 grow" v-for="skin in skins" :key="skin.identifier">
-                <SkinsCard :skin="skin" :availableAccounts="available" />
+                <SkinsCard :skin="skin" :availableAccounts="available" @buy="buy" />
             </div>
         </div>
+        <ClientOnly v-if="selectedProduct">
+            <ModalCheckout @modalEvent="toggleModal('checkout')" :product="selectedProduct" :open="data.checkout" />
+        </ClientOnly>
     </div>
 </template>
 
 <script lang="ts" setup>
 const route = useRoute();
 
+const selectedProduct = ref<Object | null>(null)
+
+const data = reactive({
+    checkout: false,
+})
+
+const toggleModal = (modal: string) => {
+    if (modal === 'checkout') {
+        data.checkout = !data.checkout
+    }
+}
+
 const skins = ref<any>([])
 const champion = ref<any>([])
 const available = ref<any>([])
+
+const buy = (product: any) => {
+    selectedProduct.value = product
+    toggleModal('checkout')
+}
+
 
 const getChampion = async () => {
     const data = await $fetch(`/api/champions/${route.params.champion}?region=${route.params.region}`)

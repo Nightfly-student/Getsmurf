@@ -63,7 +63,7 @@
         </div>
 
         <div class="pt-5 pb-3 px-2">
-            <button v-if="isAvailable()"
+            <button v-if="isAvailable()" @click="buy"
                 class="bg-red-600 hover:bg-red-700 text-xl w-full p-3 px-6 rounded-xl shadow-md">
                 Buy Now
             </button>
@@ -78,6 +78,8 @@
 <script lang="ts" setup>
 import { CheckCircleIcon } from '@heroicons/vue/24/outline'
 
+const route = useRoute()
+
 const props = defineProps({
     skin: {
         type: Object,
@@ -88,6 +90,18 @@ const props = defineProps({
         required: true
     }
 })
+
+const emits = defineEmits(['buy'])
+
+const buy = () => {
+    const product = {
+        name: props.skin.name,
+        price: price,
+        region: route.params.region,
+        skin: true
+    }
+    emits('buy', product)
+}
 
 const price = props.skin.rarity === 'kLegendary' ? 14.99 : props.skin.rarity === 'kEpic' ? 10.49 : props.skin.rarity === 'kRare' ? 9.99 : props.skin.rarity === 'kMythic' ? 12.49 : 8.95
 

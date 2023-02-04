@@ -26,6 +26,9 @@ export const getProducts = async () => {
             category: true,
             region: true,
             Accounts: {
+                where: {
+                    status: 'AVAILABLE'
+                },
                 select: {
                     id: true,
                 },
@@ -55,6 +58,9 @@ export const getProductsByRegion = async (region: Region) => {
             category: true,
             region: true,
             Accounts: {
+                where: {
+                    status: 'AVAILABLE'
+                },
                 select: {
                     id: true,
                 },
@@ -81,6 +87,9 @@ export const getProductBySlug = async (slug: string) => {
             description: true,
             uniqueIdentifier: true,
             Accounts: {
+                where: {
+                    status: 'AVAILABLE'
+                },
                 select: {
                     id: true,
                 },
@@ -144,4 +153,45 @@ export const getImportantInfo = async (slug: string) => {
             }
         })
     ])
+}
+
+export const getProductBySkinName = async (skinName: string, region: string) => {
+    return prisma.account.findFirst({
+        where: {
+            AND: [
+                {
+                    Product: {
+                        region: region as Region
+                    }
+                },
+                {
+                    Skins: {
+                        some: {
+                            skin: {
+                                name: skinName
+                            }
+                        }
+                    }
+                }
+            ]
+        },
+        select: {
+            id: true,
+            Skins: {
+                where: {
+                    skin: {
+                        name: skinName
+                    }
+                },
+                select: {
+                    skin: {
+                        select: {
+                            name: true,
+                            rarity: true,
+                        }
+                    }
+                }
+            },
+        }
+    })
 }

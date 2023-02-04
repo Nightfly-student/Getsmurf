@@ -2,7 +2,7 @@
     <div>
         <div class="flex flex-wrap gap-10 justify-center px-5" v-if="products.length !== 0">
             <div v-for="product in products" class="grow">
-                <AccountsCard :product="(product as Object)" />
+                <AccountsCard :product="(product as Object)" @buy="buy" />
             </div>
         </div>
         <div v-else>
@@ -10,6 +10,9 @@
                 <p class="text-2xl">No products found</p>
             </div>
         </div>
+        <ClientOnly v-if="selectedProduct">
+            <ModalCheckout @modalEvent="toggleModal('checkout')" :product="selectedProduct" :open="data.checkout" />
+        </ClientOnly>
     </div>
 
 </template>
@@ -21,5 +24,22 @@ const props = defineProps({
         required: true,
     },
 });
+
+const selectedProduct = ref<Object | null>(null);
+
+const buy = (product: any) => {
+    selectedProduct.value = product;
+    toggleModal('checkout');
+};
+
+const data = reactive({
+    checkout: false,
+})
+
+const toggleModal = (modal: string) => {
+    if (modal === 'checkout') {
+        data.checkout = !data.checkout
+    }
+}
 
 </script>

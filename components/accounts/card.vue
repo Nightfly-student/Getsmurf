@@ -54,7 +54,7 @@
         </div>
 
         <div class="pt-5 pb-3 px-2">
-            <button v-if="product.Accounts !== 0"
+            <button v-if="product.Accounts !== 0" @click="buy"
                 class="bg-red-600 hover:bg-red-700 text-xl w-full p-3 px-6 rounded-xl shadow-md">
                 Buy Now
             </button>
@@ -75,6 +75,12 @@ const props = defineProps({
         required: true
     }
 })
+
+const emits = defineEmits(['buy'])
+
+const buy = () => {
+    emits('buy', props.product)
+}
 
 </script>
 

@@ -26,5 +26,7 @@ export default defineEventHandler(async (event) => {
         );
     }
 
+    (product.Accounts as any) = product.Accounts.length;
+
     return product
 });

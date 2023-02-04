@@ -94,7 +94,6 @@ const getProduct = async () => {
     orders.value = data.orders
 }
 
-console.log(product.value)
 
 await getProduct()
 

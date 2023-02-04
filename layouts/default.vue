@@ -4,11 +4,11 @@
             <Nav />
         </div>
 
-        <div class="3xl:container">
+        <div class="3xl:container relative z-10">
             <NuxtPage class="mx-2 md:mx-10" />
         </div>
 
-        <div class="3xl:container pt-10">
+        <div class="3xl:container pt-10 relative z-10">
             <Footer />
         </div>
     </div>
