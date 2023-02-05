@@ -13,17 +13,17 @@
             <img class="md:h-full h-64 w-full object-cover object-top" :src="skin.image" :alt="skin.name" />
         </div>
 
-        <div class="w-44 md:w-full md:max-w-xs">
-            <h2 class="text-center truncate text-xl py-2 font-semibold">{{ skin.name }}</h2>
+        <div>
+            <h2 class="text-center text-xl truncate py-2 font-semibold">{{ skin.name }}</h2>
         </div>
 
         <div class="flex w-fit mx-auto mr-24 text-red-500 pt-5">
-            <span class="text-sm">$</span>
+            <span class="text-sm">&euro;</span>
             <p class="text-base font-semibold line-through">{{ (price + 2).toFixed(2) }}</p>
         </div>
 
         <div class="flex w-fit mx-auto">
-            <span>$</span>
+            <span>&euro;</span>
             <p class="text-5xl font-semibold">{{ price.toFixed(2) }}</p>
         </div>
 

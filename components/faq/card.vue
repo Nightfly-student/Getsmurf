@@ -4,24 +4,27 @@
         <label
             class="title text-xl select-none rounded-20 block border border-2 border-zinc-700 font-bold p-4 cursor-pointer"
             :for="props.id">
-            <span class="pr-6">What is Getsmurf Shop?</span>
+            <span class="pr-6">{{ question }}</span>
         </label>
-        <div class="content rounded-20 overflow-hidden mt-1" :class="{ 'border border-2 border-zinc-700': toggle }">
-            <p class="p-4">Getsmurf is a league of legends account provider, that offers budget-friendly accounts</p>
+        <div class="content rounded-20 overflow-hidden mt-1 max-w-2xl"
+            :class="{ 'border border-2 border-zinc-700': toggle }">
+            <p class="p-4">
+                {{ answer }}
+            </p>
         </div>
     </div>
 </template>
 
 <script lang="ts" setup>
 const props = defineProps({
-    //   title: {
-    //       type: String,
-    //       required: true
-    //   },
-    //   content: {
-    //       type: String,
-    //       required: true
-    //   },
+    question: {
+        type: String,
+        required: true
+    },
+    answer: {
+        type: String,
+        required: true
+    },
     id: {
         type: String,
         required: true

@@ -1,6 +1,7 @@
 <template>
-    <div>
-        <h2 class="text-center text-2xl font-semibold">Cheap Accounts</h2>
+    <div id="cheap">
+        <h2 class="text-center text-2xl font-semibold">Cheap Level 30 LoL Accounts</h2>
+        <p class="text-center pt-2">Our accounts are of the highest quality ready to be played by you.</p>
         <div class="pt-10">
             <AccountsRegions @region="updateRegion" />
         </div>

@@ -8,7 +8,9 @@ export default defineEventHandler(async (event) => {
         '/api/auth/user',
         '/api/products/new',
         '/api/products/admin/product',
-        '/api/accounts/admin'
+        '/api/accounts/admin',
+        '/api/blog/admin',
+        '/api/blog/create',
     ]
 
     const isHandledByThisMiddleware = endpoints.some(endpoint => {

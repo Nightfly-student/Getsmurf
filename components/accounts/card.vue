@@ -9,12 +9,12 @@
         </div>
 
         <div class="flex w-fit mx-auto mr-24 text-red-500 pt-5">
-            <span class="text-sm">$</span>
+            <span class="text-sm">&euro;</span>
             <p class="text-base font-semibold line-through">{{ product.price + 2 }}</p>
         </div>
 
         <div class="flex w-fit mx-auto">
-            <span>$</span>
+            <span>&euro;</span>
             <p class="text-5xl font-semibold">{{ product.price }}</p>
         </div>
 

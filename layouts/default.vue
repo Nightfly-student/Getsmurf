@@ -20,4 +20,8 @@ body {
     background: #202226;
     color: white;
 }
+
+html {
+    scroll-behavior: smooth;
+}
 </style>

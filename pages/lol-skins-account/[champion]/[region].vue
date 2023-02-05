@@ -6,8 +6,9 @@
             </div>
             <h1>{{ route.params.champion }} - {{ route.params.region }}</h1>
         </div>
-        <div class="flex flex-wrap gap-5 justify-center">
-            <div class="w-fit md:mx-0 grow" v-for="skin in skins" :key="skin.identifier">
+        <div class="grid grid-cols-12 gap-5 justify-center">
+            <div class="col-span-6 md:col-span-4 lg:col-span-3 3xl:col-span-2" v-for="skin in skins"
+                :key="skin.identifier">
                 <SkinsCard :skin="skin" :availableAccounts="available" @buy="buy" />
             </div>
         </div>

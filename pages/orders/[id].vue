@@ -75,7 +75,7 @@
 
                     <div class="flex justify-between px-10 py-2 space-x-5">
                         <p>Total:</p>
-                        <p class="font-semibold">${{ data.order.total.toFixed(2) }}</p>
+                        <p class="font-semibold">&euro;{{ data.order.total.toFixed(2) }}</p>
                     </div>
 
                 </div>

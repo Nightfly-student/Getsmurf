@@ -14,9 +14,9 @@
                 <AccountsRegions class="mt-5" @region="handleRegion" />
             </div>
 
-            <div class="flex flex-wrap gap-5 items-center justify-center mt-10">
-                <ChampionsCard v-for="champion in champions" :region="region" :champion="champion"
-                    :key="champion.identifier" />
+            <div class="grid grid-cols-12 gap-5 mt-10">
+                <ChampionsCard class="col-span-6 md:col-span-3" v-for="champion in champions" :region="region"
+                    :champion="champion" :key="champion.identifier" />
             </div>
 
         </div>

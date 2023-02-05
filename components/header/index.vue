@@ -2,19 +2,39 @@
     <header class="bg-zinc-800 rounded-t-20">
         <div class="grid grid-cols-12 items-center">
             <div class="col-span-12 lg:col-span-5 p-10 lg:p-20">
-                <h1 class="text-4xl lg:text-5xl xl:text-6xl font-bold">Affordable League of Legends <span
+                <h1 class="text-4xl xl:text-5xl 3xl:text-6xl font-bold">Affordable League of Legends <span
                         class="text-red-600">Smurfs</span>
                 </h1>
 
-                <p class="text-xl py-4 text-base font-semibold">We offer the highest quality accounts for great prices.
+                <p class="text-lg py-4 text-base font-semibold">We offer the highest quality accounts for great prices.
                     Look
                     through our full
                     collection
                     down below!</p>
 
-                <button class="bg-red-600 hover:bg-red-700 text-2xl p-3 px-6 rounded-xl shadow-md">
-                    Buy Now
-                </button>
+                <div>
+                    <h2 class="text-xl font-semibold pb-3 pt-5">Our Accounts</h2>
+                    <div class="flex gap-5">
+                        <a href="#cheap"
+                            class="outline outline-1 outline-red-500 hover:bg-red-500 text-lg font-semibold p-3 px-3 rounded-xl shadow-md">
+
+                            <div class="flex gap-3">
+                                <CurrencyEuroIcon class="w-5" />
+                                Cheap
+                            </div>
+
+                        </a>
+
+                        <button @click="navigateTo('/lol-skins-account')"
+                            class="outline outline-1 outline-red-500 hover:bg-red-500 text-lg font-semibold p-3 px-3 rounded-xl shadow-md">
+                            <div class="flex gap-3">
+                                <UserIcon class="w-5" />
+                                Skins
+                            </div>
+                        </button>
+                    </div>
+                </div>
+
             </div>
             <div class="col-span-0 hidden lg:block lg:col-span-7">
                 <div class="w-fit mx-auto">
@@ -25,6 +45,10 @@
         </div>
     </header>
 </template>
+
+<script lang="ts" setup>
+import { UserIcon, CurrencyEuroIcon } from '@heroicons/vue/24/outline'
+</script>
 
 <style scoped>
 .header-img {

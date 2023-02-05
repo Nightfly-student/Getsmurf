@@ -19,7 +19,9 @@
                     </NuxtLink>
                 </li>
                 <li>
-                    Blog
+                    <NuxtLink to="/blog">
+                        Blog
+                    </NuxtLink>
                 </li>
                 <li v-if="logged && user?.role === 'ADMIN'">
                     <NuxtLink to="/admin">
