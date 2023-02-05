@@ -43,7 +43,7 @@
                     <a href="#" @click="mobileRouter($event, '/')">Home</a>
                 </li>
                 <li class="block px-4 py-2">
-                    <a href="#" @click="mobileRouter($event, '/services')">Skin Accounts</a>
+                    <a href="#" @click="mobileRouter($event, '/lol-skins-account')">Skin Accounts</a>
                 </li>
                 <li class="block px-4 py-2">
                     <a href="#" @click="mobileRouter($event, '/blog')">Blog</a>

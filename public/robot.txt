@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+
+Disallow: /admin/
+Disallow: /orders/
+Disallow: /user/
+
+
+Sitemap: https://trainy.io/sitemap.xml
