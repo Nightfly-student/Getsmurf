@@ -1,10 +1,11 @@
 <template>
     <div>
+        <NuxtLoadingIndicator color="red" :height="3" />
         <div class="3xl:container">
             <Nav />
         </div>
         <div
-            class="relative z-10 3xl:container 3xl:block mx-2 md:mx-10 lg:mx-15 bg-light-overlay/5 dark:bg-dark-overlay/75 rounded-20">
+            class="relative 3xl:container 3xl:block mx-2 md:mx-10 lg:mx-15 bg-light-overlay/5 dark:bg-dark-overlay/75 rounded-20">
             <div>
                 <NavAdminSidebar>
                     <div class="px-2">
@@ -13,13 +14,20 @@
                 </NavAdminSidebar>
             </div>
         </div>
-        <div class="3xl:container relative z-10">
+        <div class="3xl:container relative">
             <Footer />
         </div>
     </div>
 </template>
 
-<script setup lang="ts"></script>
+<script lang="ts" setup>
+const nuxtApp = useNuxtApp()
+
+nuxtApp.hook("page:finish", () => {
+    window.scrollTo(0, 0)
+})
+
+</script>
 
 <style>
 body {

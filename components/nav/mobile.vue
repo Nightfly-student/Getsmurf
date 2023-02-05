@@ -43,20 +43,25 @@
                     <a href="#" @click="mobileRouter($event, '/')">Home</a>
                 </li>
                 <li class="block px-4 py-2">
-                    <a href="#" @click="mobileRouter($event, '/services')">Services</a>
-                </li>
-                <li class="block px-4 py-2">
-                    <a href="#" @click="mobileRouter($event, '/stores')">Stores</a>
+                    <a href="#" @click="mobileRouter($event, '/services')">Skin Accounts</a>
                 </li>
                 <li class="block px-4 py-2">
                     <a href="#" @click="mobileRouter($event, '/blog')">Blog</a>
+                </li>
+                <li class="block px-4 py-2" v-if="logged && user?.role === 'ADMIN'">
+                    <a href="#" @click="mobileRouter($event, '/admin')">Admin Panel</a>
                 </li>
             </ul>
             <div class="m-5 bg-gray-600 h-1 rounded-20" />
             <ClientOnly>
                 <ul class="font-semibold mx-10 text-xl">
-                    <li class="block px-4 py-2">
+                    <li class="block px-4 py-2" v-if="!logged">
                         <a href="#" @click="mobileRouter($event, '/login')">Login / Register</a>
+                    </li>
+                    <li v-else>
+                        <button @click="handleLogout">
+                            Logout
+                        </button>
                     </li>
                 </ul>
             </ClientOnly>
@@ -65,6 +70,21 @@
 </template>
 
 <script lang="ts" setup>
+const props = defineProps({
+    logged: {
+        type: Boolean,
+        required: true,
+    },
+})
+
+const { logout, useAuthUser } = useAuth()
+
+const user = computed(() => useAuthUser().value)
+
+const handleLogout = () => {
+    logout()
+}
+
 const openMobileMenu = ref(false)
 function openMobile() {
     openMobileMenu.value = !openMobileMenu.value

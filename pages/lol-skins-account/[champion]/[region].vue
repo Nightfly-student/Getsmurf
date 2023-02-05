@@ -20,6 +20,7 @@
 
 <script lang="ts" setup>
 const route = useRoute();
+const config = useRuntimeConfig();
 
 const selectedProduct = ref<Object | null>(null)
 
@@ -52,4 +53,35 @@ const getChampion = async () => {
 
 await getChampion()
 
+useHead({
+    title: `${route.params.champion} Skin Account for Region ${route.params.region} - GetSmurf`,
+    link: [
+        {
+            rel: "canonical",
+            href: `${config.appUrl + route.fullPath}`,
+        },
+    ],
+    meta: [
+        {
+            name: "description",
+            content:
+                `Buy a League of Legends account skin shard for ${route.params.champion} in ${route.params.region}.`
+        },
+        {
+            property: "og:title",
+            content: `${route.params.champion} Skin Account for Region ${route.params.region} - GetSmurf`,
+        },
+        {
+            property: "og:description",
+            content:
+                `Buy a League of Legends account skin shard for ${route.params.champion} in ${route.params.region}.`
+        },
+        {
+            property: "og:image",
+            content:
+                `${champion.image}`
+        },
+        { property: "og:type", content: "website" },
+    ],
+});
 </script>

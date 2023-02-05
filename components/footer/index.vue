@@ -12,13 +12,19 @@
             <div>
                 <ul class="text-xl font-semibold text-center md:text-right">
                     <li>
-                        Contact
+                        <NuxtLink to="/contact">
+                            Contact
+                        </NuxtLink>
                     </li>
                     <li>
-                        Privacy Policy
+                        <NuxtLink to="/privacy-policy">
+                            Privacy Policy
+                        </NuxtLink>
                     </li>
                     <li>
-                        Terms & Conditions
+                        <NuxtLink to="/terms-and-conditions">
+                            Terms & Conditions
+                        </NuxtLink>
                     </li>
                 </ul>
             </div>
