@@ -13,6 +13,7 @@
     "prisma": "^4.9.0"
   },
   "dependencies": {
+    "@funken-studio/sitemap-nuxt-3": "^4.0.4",
     "@heroicons/vue": "^2.0.14",
     "@nuxtjs/tailwindcss": "^6.3.0",
     "@prisma/client": "^4.9.0",

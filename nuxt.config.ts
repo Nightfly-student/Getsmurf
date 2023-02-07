@@ -1,6 +1,8 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import dynamicRoutes from './helpers/dynamicRoutes'
+
 export default defineNuxtConfig({
-    modules: ['@nuxtjs/tailwindcss'],
+    modules: ['@nuxtjs/tailwindcss', '@funken-studio/sitemap-nuxt-3'],
     build: {
         transpile: ["@heroicons/vue"],
     },
@@ -21,5 +23,41 @@ export default defineNuxtConfig({
         public: {
             appUrl: process.env.APP_URL,
         }
-    }
+    },
+    app: {
+        head: {
+            script: [
+                {
+                    src: "https://www.googletagmanager.com/gtag/js?id=G-YE84S8371L",
+                    async: 'true',
+                },
+                {
+                    innerHTML: `
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', 'G-YE84S8371L');
+              `,
+                },
+            ],
+        }
+    },
+    sitemap: {
+        hostname: process.env.APP_URL,
+        cacheTime: 1,
+        routes: dynamicRoutes,
+        exclude: [
+            '/admin',
+            '/admin/**',
+            '/api/**',
+            '/profile',
+            '/profile/**',
+            '/register/**',
+        ],
+        defaults: {
+            changefreq: 'daily',
+            priority: 1,
+            lastmod: new Date().toISOString(),
+        },
+    },
 })

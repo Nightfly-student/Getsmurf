@@ -1,6 +1,5 @@
 <template>
-    <div class="bg-zinc-800 md:max-w-sm xl:max-w-md 3xl:max-w-lg p-7 cursor-pointer hover:scale-105"
-        @click="navigateTo(`/blog/${blog.slug}`)">
+    <div class="bg-zinc-800 p-7 cursor-pointer hover:scale-105" @click="navigateTo(`/blog/${blog.slug}`)">
         <div class="bg-gradient-to-b from-black/100 to-red-500/25">
             <img class="opacity-70" :src="blog.image" :alt="blog.title" />
         </div>

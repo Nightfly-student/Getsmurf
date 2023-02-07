@@ -1,6 +1,6 @@
 <template>
     <div>
-        <NuxtLink class="text-gray-800 text-sm dark:cool dark:text-gray-50" :to="props.link">
+        <NuxtLink class="text-white text-sm" :to="props.link">
             <div
                 class="flex md:gap-5 py-3 justify-center md:justify-start md:pl-7 cursor-pointer hover:bg-light-50/10 cont">
                 <div class="w-5 icon">
