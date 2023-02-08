@@ -177,3 +177,112 @@ export const updateOrderAccount = async (id: string, accountId: string, orderSta
         }),
     ])
 }
+
+export const getOrdersAdmin = async (q: string, take: number, skip: number) => {
+    return prisma.$transaction([
+        prisma.order.count({
+            where: {
+                OR: [
+                    {
+                        billingEmail: {
+                            contains: q,
+                            mode: 'insensitive',
+                        },
+                    },
+                    {
+                        id: {
+                            contains: q,
+                            mode: 'insensitive',
+                        },
+                    },
+                    {
+                        product: {
+                            name: {
+                                contains: q,
+                                mode: 'insensitive',
+                            },
+                        },
+                    },
+                    {
+                        skin: {
+                            name: {
+                                contains: q,
+                                mode: 'insensitive',
+                            },
+                        },
+                    },
+                    {
+                        ...Object.values(OrderStatus).includes(q.toUpperCase() as OrderStatus)
+                        && {
+                            status: q.toUpperCase() as OrderStatus,
+                        }
+                    }
+                ],
+            },
+        }),
+        prisma.order.findMany({
+            where: {
+                OR: [
+                    {
+                        billingEmail: {
+                            contains: q,
+                            mode: 'insensitive',
+                        },
+                    },
+                    {
+                        id: {
+                            contains: q,
+                            mode: 'insensitive',
+                        },
+                    },
+                    {
+                        product: {
+                            name: {
+                                contains: q,
+                                mode: 'insensitive',
+                            },
+                        },
+                    },
+                    {
+                        skin: {
+                            name: {
+                                contains: q,
+                                mode: 'insensitive',
+                            },
+                        },
+                    },
+                    {
+                        ...Object.values(OrderStatus).includes(q.toUpperCase() as OrderStatus)
+                        && {
+                            status: q.toUpperCase() as OrderStatus,
+                        }
+                    }
+                ],
+            },
+            take: take,
+            skip: skip,
+            orderBy: {
+                createdAt: 'desc',
+            },
+            select: {
+                id: true,
+                status: true,
+                billingEmail: true,
+                quantity: true,
+                total: true,
+                product: {
+                    select: {
+                        name: true,
+                    }
+                },
+                skin: {
+                    select: {
+                        name: true,
+                    },
+                },
+            },
+        })
+    ])
+
+}
+

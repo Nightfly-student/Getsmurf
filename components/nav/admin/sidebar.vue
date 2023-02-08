@@ -16,7 +16,7 @@
                             <p class="md:pl-7 text-center md:text-left pt-3 text-xs md:text-sm">Analytics</p>
                         </li>
                         <li>
-                            <NavTab link="/admin/stores">
+                            <NavTab link="/admin/orders">
                                 <template v-slot:icon>
                                     <BuildingStorefrontIcon />
                                 </template>

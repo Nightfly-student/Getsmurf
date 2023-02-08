@@ -3,7 +3,7 @@
         <div>
             <h1 class="text-center text-3xl font-semibold">Products</h1>
         </div>
-        <div class="space-y-5">
+        <div class="space-y-5 pb-10">
             <div class="w-fit ml-auto">
                 <NuxtLink to="/admin/products/new" class="bg-zinc-900 p-3 px-5 rounded-20">
                     Create New
