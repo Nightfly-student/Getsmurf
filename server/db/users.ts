@@ -12,7 +12,7 @@ export const getUserByEmail = async (email: string) => {
     return prisma.user.findFirst({
         where: {
             email: {
-                equals: email,
+                contains: email,
                 mode: "insensitive"
             }
         }
