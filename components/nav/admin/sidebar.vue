@@ -70,7 +70,12 @@
 </template>
 
 <script lang="ts" setup>
-import { AdjustmentsVerticalIcon, ShoppingBagIcon, AcademicCapIcon, NewspaperIcon, PaperClipIcon, UserIcon, BuildingStorefrontIcon } from "@heroicons/vue/24/outline"
+import AdjustmentsVerticalIcon from "@heroicons/vue/24/outline/AdjustmentsVerticalIcon";
+import ShoppingBagIcon from "@heroicons/vue/24/outline/ShoppingBagIcon";
+import NewspaperIcon from "@heroicons/vue/24/outline/NewspaperIcon";
+import PaperClipIcon from "@heroicons/vue/24/outline/PaperClipIcon";
+import UserIcon from "@heroicons/vue/24/outline/UserIcon";
+import BuildingStorefrontIcon from "@heroicons/vue/24/outline/BuildingStorefrontIcon";
 </script>
 
 <style scoped>

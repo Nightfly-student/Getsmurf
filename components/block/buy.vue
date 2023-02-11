@@ -43,5 +43,8 @@
 </template>
 
 <script lang="ts" setup>
-import { WalletIcon, ShieldCheckIcon, UserIcon, BanknotesIcon } from '@heroicons/vue/24/outline'
+import WalletIcon from '@heroicons/vue/24/outline/WalletIcon'
+import ShieldCheckIcon from '@heroicons/vue/24/outline/ShieldCheckIcon';
+import UserIcon from '@heroicons/vue/24/outline/UserIcon';
+import BanknotesIcon from '@heroicons/vue/24/outline/BanknotesIcon';
 </script>

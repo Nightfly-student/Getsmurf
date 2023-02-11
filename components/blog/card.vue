@@ -25,7 +25,7 @@
 </template>
 
 <script lang ="ts" setup>
-import { ChevronRightIcon } from '@heroicons/vue/24/solid'
+import ChevronRightIcon from '@heroicons/vue/24/solid/ChevronRightIcon'
 
 const props = defineProps({
     blog: {

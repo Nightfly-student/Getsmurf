@@ -21,7 +21,8 @@
 </template>
 
 <script lang="ts" setup>
-import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/vue/24/outline";
+import ArrowLeftIcon from "@heroicons/vue/24/outline/ArrowLeftIcon";
+import ArrowRightIcon from "@heroicons/vue/24/outline/ArrowRightIcon";
 const props = defineProps({
     pages: {
         type: Number,

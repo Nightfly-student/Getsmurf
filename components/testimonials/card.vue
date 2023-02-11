@@ -18,7 +18,7 @@
 </template>
 
 <script lang="ts" setup>
-import { StarIcon } from '@heroicons/vue/24/solid'
+import StarIcon from '@heroicons/vue/24/solid/StarIcon'
 
 const props = defineProps({
     name: {

@@ -47,7 +47,8 @@
 </template>
 
 <script lang="ts" setup>
-import { UserIcon, CurrencyEuroIcon } from '@heroicons/vue/24/outline'
+import UserIcon from '@heroicons/vue/24/outline/UserIcon'
+import CurrencyEuroIcon from '@heroicons/vue/24/outline/CurrencyEuroIcon';
 </script>
 
 <style scoped>
