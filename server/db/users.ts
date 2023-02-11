@@ -11,10 +11,7 @@ export const getUserById = async (id: string) => {
 export const getUserByEmail = async (email: string) => {
     return prisma.user.findFirst({
         where: {
-            email: {
-                contains: email,
-                mode: "insensitive"
-            }
+            email: email
         }
     })
 }
