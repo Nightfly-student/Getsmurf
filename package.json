@@ -33,6 +33,7 @@
     "jsonwebtoken": "^9.0.0",
     "leo-profanity": "^1.7.0",
     "quill-delta-to-html": "^0.12.1",
+    "semver": "^7.3.8",
     "stripe": "^11.9.0",
     "url-pattern": "^1.0.3",
     "vee-validate": "^4.7.3",
