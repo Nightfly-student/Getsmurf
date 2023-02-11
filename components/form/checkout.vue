@@ -7,7 +7,10 @@
                 <h2 class="text-white text-xl font-semibold">Apply Coupon</h2>
                 <p class="text-sm py-2">Enter your coupon code here below.</p>
                 <div class="w-2/3">
-                    <Input name="coupon" class="mt-1" placeholder="Coupon Code" />
+                    <Input name="coupon" @blur="handleBlur" class="mt-1" placeholder="Coupon Code" />
+                </div>
+                <div class="py-2 pl-5 pr-5 rounded-20 mt-2 shadow-md bg-zinc-900 w-fit" v-if="data.errorMsg !== ''">
+                    <p class="text-sm">{{ data.errorMsg }}</p>
                 </div>
             </div>
 
@@ -29,7 +32,7 @@
                         <div class="flex justify-between items-center gap-3">
                             <p v-if="!product.skin" class="text-gray-500">Price Per Account:</p>
                             <p v-else class="text-gray-500">Price For Account:</p>
-                            <p>{{ product.price.toFixed(2) }}$</p>
+                            <p>{{ price.toFixed(2) }}$</p>
                         </div>
                     </li>
                     <li>
@@ -61,7 +64,7 @@
                 <button ty pe="submit" @click="checkout($event, values)" :disabled="!formMeta.valid || data.loading"
                     class="text-white w-full disabled:bg-red-500/20 font-bold bg-red-500 hover:bg-red-500/75 p-3 rounded-20">
                     <IconsSpinner class="w-5 h-5" :loading="data.loading" />
-                    Checkout | {{ (product.price * values.quantity).toFixed(2) }}$
+                    Checkout | {{ (price * values.quantity).toFixed(2) }}$
                 </button>
             </div>
 
@@ -79,8 +82,12 @@ const props = defineProps({
     }
 })
 
+const price = ref(props.product.price)
+const coupon = ref<string | null>(null)
+
 const data = reactive({
     loading: false,
+    errorMsg: '',
 })
 
 const schema = object({
@@ -104,7 +111,8 @@ const checkout = async (e: Event, values: any) => {
             ...props.product.skin && {
                 skin: props.product.skin,
             },
-            region: props.product.region
+            region: props.product.region,
+            coupon: coupon.value,
         })
     }).then((res) => {
         window.open(
@@ -114,6 +122,24 @@ const checkout = async (e: Event, values: any) => {
     }).finally(() => {
         data.loading = false
     })
+}
+
+const handleBlur = async (value: string) => {
+    console.log(value)
+
+    if (value.length > 0) {
+        data.loading = true
+        await $fetch(`/api/coupon/${value}`).then((res) => {
+            price.value = props.product.price - (props.product.price / 100 * (res.discount as number))
+            data.errorMsg = 'Successfully applied coupon!'
+            coupon.value = res.code
+        }).catch((err) => {
+            data.errorMsg = err.response.statusText
+            price.value = props.product.price
+        }).finally(() => {
+            data.loading = false
+        })
+    }
 }
 
 </script>

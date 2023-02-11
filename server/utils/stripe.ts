@@ -6,6 +6,7 @@ import { getProductBySkinName } from "../db/products";
 import { sendOrderProcessingEmail } from "./mailing/orderPending";
 import { sendOrderFailedEmail } from "./mailing/orderFail";
 import { sendOrderSuccessEmail } from "./mailing/orderSuccess";
+import { updateCouponUses } from "../db/coupons";
 
 const stripe = () => {
     const config = useRuntimeConfig();
@@ -190,6 +191,10 @@ export const handleStripeEvent = async (
                             statusMessage: "Stripe webhook error | payment_intent.succeeded | Order not found",
                         })
                     );
+                }
+
+                if (order.coupon) {
+                    await updateCouponUses(order.coupon.code)
                 }
 
                 await sendOrderSuccessEmail(

@@ -20,6 +20,13 @@ export const createOrder = async (data: any) => {
                     }
                 }
             },
+            ...data.coupon && {
+                coupon: {
+                    connect: {
+                        code: data.coupon,
+                    }
+                }
+            },
             status: 'CREATED',
             total: parseFloat(data.total),
         },
@@ -115,6 +122,12 @@ export const getOrderByOrderIdWebhook = async (id: string) => {
                 select: {
                     paymentMethod: true,
                     sessionId: true,
+                }
+            },
+            coupon: {
+                select: {
+                    code: true,
+                    discount: true,
                 }
             }
         }

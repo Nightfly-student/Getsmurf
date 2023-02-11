@@ -9,9 +9,12 @@ export const getUserById = async (id: string) => {
 }
 
 export const getUserByEmail = async (email: string) => {
-    return prisma.user.findUnique({
+    return prisma.user.findFirst({
         where: {
-            email
+            email: {
+                equals: email,
+                mode: "insensitive"
+            }
         }
     })
 }

@@ -44,7 +44,6 @@
                     placeholder="Supplier Source" />
             </div>
 
-            {{ slug }}
             <div class="col-span-12">
                 <div>
                     <button type="submit" @click="submitLogin($event, values)"

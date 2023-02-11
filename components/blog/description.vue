@@ -34,4 +34,20 @@ const html = ref(converter.convert());
     font-size: 18px;
     font-weight: 400;
 }
+
+#description :deep() ul {
+    font-size: 18px;
+    font-weight: 400;
+    list-style: disc;
+    padding-left: 50px;
+}
+
+#description :deep() li {
+    padding-top: 10px;
+}
+
+#description :deep() a {
+    color: rgb(203, 46, 46);
+    text-decoration: underline;
+}
 </style>

@@ -7,7 +7,7 @@ import { createStripeCheckoutSession } from "~~/server/utils/stripe";
 export default defineEventHandler(async (event) => {
     const body = await readBody(event);
 
-    const { productSlug, billingEmail, paymentMethod, quantity, skin, region } = body;
+    const { productSlug, billingEmail, paymentMethod, quantity, skin, region, coupon } = body;
 
     if (!productSlug || !billingEmail || !paymentMethod || !quantity) {
         return sendError(event, createError({ statusCode: 400, statusMessage: 'Invalid params' }))
@@ -35,7 +35,8 @@ export default defineEventHandler(async (event) => {
             productSlug,
             total: product.Skins[0].skin.rarity === 'kLegendary' ? 14.99 : product.Skins[0].skin.rarity === 'kEpic' ? 10.49 : product.Skins[0].skin.rarity === 'kRare' ? 9.99 : product.Skins[0].skin.rarity === 'kMythic' ? 12.49 : 8.95,
             skin,
-            region
+            region,
+            coupon
         }
 
     } else {
@@ -54,7 +55,17 @@ export default defineEventHandler(async (event) => {
             quantity: parseInt(quantity),
             productSlug,
             total: product.price * quantity,
-            region
+            region,
+            coupon
+        }
+    }
+
+    if (orderData.coupon) {
+        const coupon = await $fetch(`/api/coupon/${orderData.coupon}`)
+
+        if (coupon) {
+            orderData.total = (orderData.total - (orderData.total / 100 * (coupon.discount)).toFixed(2))
+            product.price = (product.price - (product.price / 100 * (coupon.discount)).toFixed(2))
         }
     }
 

@@ -15,6 +15,8 @@
 
                     <button class="ql-bold"></button>
                     <button class="ql-italic"></button>
+                    <button class="ql-underline"></button>
+                    <button class="ql-link"></button>
                 </div>
             </template>
         </QuillEditor>
@@ -69,5 +71,9 @@ const onTextChange = () => {
 
 .ql-editor h3 {
     font-size: 20px !important;
+}
+
+.ql-editor ul {
+    font-size: 16px !important;
 }
 </style>

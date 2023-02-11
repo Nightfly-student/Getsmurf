@@ -26,7 +26,7 @@ const props = defineProps({
 
 const selectedRegion = ref<Region>('EUW')
 
-onMounted(() => {
+onBeforeMount(() => {
     if (!localStorage.getItem('region') || localStorage.getItem('region') === 'null') return
     selectedRegion.value = localStorage.getItem('region') as Region || 'EUW'
     handleRegion(selectedRegion.value)

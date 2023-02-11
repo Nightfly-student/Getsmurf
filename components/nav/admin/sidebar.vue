@@ -40,6 +40,14 @@
                             </NavTab>
                         </li>
                         <li>
+                            <NavTab link="/admin/coupons">
+                                <template v-slot:icon>
+                                    <PaperClipIcon />
+                                </template>
+                                <template v-slot:link> Coupons </template>
+                            </NavTab>
+                        </li>
+                        <li>
                             <p class="md:pl-7 text-center md:text-left pt-3 text-xs md:text-sm">Misc</p>
                         </li>
                         <li>
@@ -62,7 +70,7 @@
 </template>
 
 <script lang="ts" setup>
-import { AdjustmentsVerticalIcon, ShoppingBagIcon, AcademicCapIcon, NewspaperIcon, AdjustmentsHorizontalIcon, UserIcon, BuildingStorefrontIcon } from "@heroicons/vue/24/outline"
+import { AdjustmentsVerticalIcon, ShoppingBagIcon, AcademicCapIcon, NewspaperIcon, PaperClipIcon, UserIcon, BuildingStorefrontIcon } from "@heroicons/vue/24/outline"
 </script>
 
 <style scoped>
