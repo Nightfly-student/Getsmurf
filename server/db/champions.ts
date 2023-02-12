@@ -75,11 +75,20 @@ export const getChampionAndSkinsAndAvailableSkins = async (champion: string, reg
             select: {
                 Skins: {
                     where: {
-                        skin: {
-                            champion: {
-                                name: champion,
+                        AND: [
+                            {
+                                skin: {
+                                    champion: {
+                                        name: champion,
+                                    }
+                                }
+                            },
+                            {
+                                account: {
+                                    status: 'AVAILABLE'
+                                }
                             }
-                        }
+                        ]
                     },
                     select: {
                         skin: {

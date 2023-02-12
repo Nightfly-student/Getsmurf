@@ -3,14 +3,18 @@
         <div class="bg-gradient-to-b from-black/100 to-red-500/25">
             <img class="opacity-70" :src="blog.image" :alt="blog.title" />
         </div>
-        <div class="pt-2">
-            <h2 class="text-3xl font-semibold text-center truncate">{{ blog.title }}</h2>
+
+        <div class="h-36">
+            <div class="pt-2">
+                <h2 class="text-xl font-semibold">{{ blog.title }}</h2>
+            </div>
+            <div class="pt-2">
+                <p>
+                    {{ blog.meta.description }}
+                </p>
+            </div>
         </div>
-        <div class="px-2">
-            <p>
-                {{ blog.meta.description }}
-            </p>
-        </div>
+
         <div class="pt-4 cursor-pointer">
             <div class="w-fit ml-auto flex gap-2 items-center">
                 <NuxtLink :to="`/blog/${blog.slug}`" class="text-red-500 hover:underline">

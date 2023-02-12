@@ -30,20 +30,6 @@
                 </li>
             </ul>
         </div>
-        <div class="shrink">
-            <ul class="flex items-center lg:gap-5 select-none">
-                <li v-if="!logged">
-                    <NuxtLink to="/login">
-                        Login/Register
-                    </NuxtLink>
-                </li>
-                <li v-else>
-                    <button @click="handleLogout">
-                        Logout
-                    </button>
-                </li>
-            </ul>
-        </div>
     </nav>
 </template>
 
@@ -55,14 +41,9 @@ const props = defineProps({
     },
 })
 
-const { logout, useAuthUser } = useAuth()
+const { useAuthUser } = useAuth()
 
 const user = computed(() => useAuthUser().value)
-
-const handleLogout = () => {
-    logout()
-}
-
 
 
 </script>

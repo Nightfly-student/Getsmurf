@@ -26,6 +26,16 @@
                             Terms & Conditions
                         </NuxtLink>
                     </li>
+                    <li v-if="!logged">
+                        <NuxtLink to="/login">
+                            Login
+                        </NuxtLink>
+                    </li>
+                    <li v-else>
+                        <button @click="handleLogout">
+                            Logout
+                        </button>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -41,3 +51,13 @@
         </div>
     </div>
 </template>
+
+<script lang="ts" setup>
+const { logout, isLogged } = useAuth()
+
+const logged = computed(() => isLogged())
+
+const handleLogout = () => {
+    logout()
+}
+</script>
