@@ -26,15 +26,15 @@ const props = defineProps({
 
 const selectedRegion = ref<Region>('EUW')
 
-onBeforeMount(() => {
+onMounted(() => {
     if (!localStorage.getItem('region') || localStorage.getItem('region') === 'null') return
-    selectedRegion.value = localStorage.getItem('region') as Region || 'EUW'
-    handleRegion(selectedRegion.value)
+    handleRegion(localStorage.getItem('region') as Region)
 })
 
 const regions = ['EUW', 'EUNE', 'NA', 'OCE', 'LAN', 'LAS', 'BR', 'TR', 'RU']
 
 const emits = defineEmits(['region'])
+
 const handleRegion = (region: Region) => {
     emits('region', region)
     selectedRegion.value = region
