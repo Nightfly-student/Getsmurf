@@ -2,7 +2,7 @@
     <div class="bg-zinc-800 p-7 h-full relative pb-16 cursor-pointer hover:scale-105"
         @click="navigateTo(`/blog/${blog.slug}`)">
         <div class="bg-gradient-to-b from-black/100 to-red-500/25">
-            <img class="opacity-70" :src="blog.image" :alt="blog.title" />
+            <img class="opacity-70 max-w-100" :src="blog.image" :alt="blog.title" />
         </div>
 
         <div>
