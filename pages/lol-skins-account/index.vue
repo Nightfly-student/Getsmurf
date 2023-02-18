@@ -30,7 +30,8 @@ const route = useRoute();
 
 const champions = ref<any>([])
 const holdChampions = ref<any>([])
-const region = ref<string>("EUW")
+
+const region = ref<string>(route.query.region ? route.query.region as string : 'EUW')
 
 const getChampions = async () => {
     const data = await $fetch(`/api/champions/`)

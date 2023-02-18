@@ -1,10 +1,11 @@
 <template>
-    <div class="bg-zinc-800 p-7 cursor-pointer hover:scale-105" @click="navigateTo(`/blog/${blog.slug}`)">
+    <div class="bg-zinc-800 p-7 h-full relative pb-16 cursor-pointer hover:scale-105"
+        @click="navigateTo(`/blog/${blog.slug}`)">
         <div class="bg-gradient-to-b from-black/100 to-red-500/25">
             <img class="opacity-70" :src="blog.image" :alt="blog.title" />
         </div>
 
-        <div class="h-36">
+        <div>
             <div class="pt-2">
                 <h2 class="text-xl font-semibold">{{ blog.title }}</h2>
             </div>
@@ -15,7 +16,7 @@
             </div>
         </div>
 
-        <div class="pt-4 cursor-pointer">
+        <div class="pt-4 cursor-pointer absolute bottom-0 right-0 m-5">
             <div class="w-fit ml-auto flex gap-2 items-center">
                 <NuxtLink :to="`/blog/${blog.slug}`" class="text-red-500 hover:underline">
                     <p class="hover:underline">Read more</p>

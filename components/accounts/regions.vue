@@ -24,12 +24,10 @@ const props = defineProps({
     }
 })
 
-const selectedRegion = ref<Region>('EUW')
+const route = useRoute()
+const router = useRouter()
 
-onMounted(() => {
-    if (!localStorage.getItem('region') || localStorage.getItem('region') === 'null') return
-    handleRegion(localStorage.getItem('region') as Region)
-})
+const selectedRegion = ref<Region>(route.query.region ? route.query.region as Region : 'EUW')
 
 const regions = ['EUW', 'EUNE', 'NA', 'OCE', 'LAN', 'LAS', 'BR', 'TR', 'RU']
 
@@ -38,5 +36,14 @@ const emits = defineEmits(['region'])
 const handleRegion = (region: Region) => {
     emits('region', region)
     selectedRegion.value = region
+
+    router.replace({
+        query: {
+            ...route.query,
+            region
+        }
+    })
 }
+
+
 </script>

@@ -1,7 +1,7 @@
 <template>
     <div>
-        <div class="grid grid-cols-12 px-5 md:gap-10 justify-center">
-            <div v-for="blog in blogs" class="col-span-12 md:col-span-6 lg:col-span-4">
+        <div class="grid grid-cols-12 px-5 gap-10 justify-center items-stretch">
+            <div v-for="blog in blogs" class="col-span-12 md:col-span-6 h-full lg:col-span-4">
                 <BlogCard :blog="blog" />
             </div>
         </div>

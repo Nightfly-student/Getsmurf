@@ -15,7 +15,9 @@
 <script lang="ts" setup>
 import type { Region } from '~~/helpers/enums';
 
-const selectedRegion = ref<Region>('EUW')
+const route = useRoute()
+
+const selectedRegion = ref<Region>(route.query.region ? route.query.region as Region : 'EUW')
 const products = ref<any>([])
 const isLoading = ref<boolean>(false)
 

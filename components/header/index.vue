@@ -20,7 +20,7 @@
 
                             <div class="flex gap-3">
                                 <CurrencyEuroIcon class="w-5" />
-                                Cheap
+                                Smurfs
                             </div>
 
                         </a>
