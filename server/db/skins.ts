@@ -22,6 +22,9 @@ export const upsertSkins = async (skins: any) => {
                 },
             })
         ))
-    )
+    ).catch((err) => {
+        console.log(err)
+        console.log(skins[err.batchRequestIdx])
+    })
 
 }

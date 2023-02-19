@@ -10,7 +10,9 @@
                 <h2 class="text-xl font-semibold">Order Information</h2>
                 <div class="bg-zinc-800 py-5 px-2 rounded-20 mb-5 shadow-sm">
                     <h2 class="text-xl font-semibold text-center">Need Help?</h2>
-                    <p class="text-center">Please create a ticket on our discord server.</p>
+                    <p class="text-center">Please create a ticket on our <a target="_blank"
+                            href="https://discord.gg/bBqWZTd9Zg">Discord
+                            server</a>.</p>
                 </div>
 
                 <div v-if="data.order.status === 'CREATED' && paymentUrl"
@@ -23,7 +25,8 @@
                     </div>
                 </div>
 
-                <div v-else class="bg-zinc-800 py-5 px-2 rounded-20 mb-5 shadow-sm mb-5">
+                <div v-if="data.order.status === 'CREATED' && !paymentUrl"
+                    class="bg-zinc-800 py-5 px-2 rounded-20 mb-5 shadow-sm mb-5">
                     <h2 class="text-xl font-semibold text-center">There was a problem handling your order...</h2>
                     <p class="text-center pt-2">Please contact us, to help you with your order.</p>
                 </div>
@@ -127,7 +130,7 @@ const handlePaymentUrl = () => {
     }
 }
 useHead({
-    title: `Order #${data.order.id} - Trainy`,
+    title: `Order #${data.order.id} - GetSmurf`,
     link: [
         {
             rel: "canonical",
@@ -137,7 +140,7 @@ useHead({
     meta: [
         {
             property: "og:title",
-            content: `Order #${data.order.id} - Trainy`,
+            content: `Order #${data.order.id} - GetSmurf`,
         },
         { property: "og:type", content: "website" },
     ],

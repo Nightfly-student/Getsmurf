@@ -5,7 +5,7 @@
                 <div class="flex items-center ml-5 md:ml-0 md:gap-4 w-32">
                     <img src="https://res.cloudinary.com/dxns0vltg/image/upload/v1674893527/logo_ik1lpf.png"
                         alt="GetSmurf Logo" class="h-20" />
-                    <p class="text-3xl font-bold text-left">Get Smurfs</p>
+                    <p class="text-3xl font-bold text-left">Get Smurf</p>
                 </div>
                 <p class="text-sm md:pl-6">2023 GETSMURF, All Rights Reserved</p>
             </div>

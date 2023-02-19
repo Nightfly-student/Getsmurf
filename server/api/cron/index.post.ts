@@ -39,7 +39,7 @@ export default defineEventHandler(async (event) => {
                 (skin: any, index: number) => {
                     if (!skin.isBase) {
                         return {
-                            name: skin.name,
+                            name: skin.name.includes(':') ? skin.name.replaceAll(':', '') : skin.name,
                             identifier: skin.id.toString(),
                             image: `https://cdn.communitydragon.org/${version}/champion/${championsData.data[key].key}/portrait/skin/${skin.loadScreenPath.split('/')[7].toLowerCase().replace('skin', '')}`,
                             rarity: skin.rarity,

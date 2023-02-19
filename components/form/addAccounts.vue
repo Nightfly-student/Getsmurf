@@ -19,6 +19,9 @@
                         <option v-if="!slug" value="REGION:USER:PASS:BE">REGION:USER:PASS:BE</option>
                         <option v-if="!slug" value="REGION:USER:PASS:BE:SKIN_SHARDS">REGION:USER:PASS:BE:SKIN_SHARDS
                         </option>
+                        <option v-if="!slug" value="REGION:USER:PASS:LEVEL:BE:OE:CHAMPIONS:SKIN_SHARDS">
+                            REGION:USER:PASS:LEVEL:BE:OE:CHAMPIONS:SKIN_SHARDS
+                        </option>
                     </InputSelect>
                 </div>
                 <VErrorMessage name="game" as="div" class="text-red-600" />
@@ -101,19 +104,43 @@ async function submitLogin(e: Event, values: any) {
         accounts: accountsJsonArray,
     }
 
-    await useFetchApi('/api/accounts/admin', {
-        method: 'POST',
-        body: {
-            supplier: info.supplier,
-            accounts: info.accounts,
-        }
-    }).then((res) => {
-        alert(`${res} Accounts Added!`)
-    }).catch((err) => {
-        data.errorMsg = err;
+
+    // Make a promise all for each account
+    await Promise.all(
+        accountsJsonArray.map(async (account: any) => {
+            await useFetchApi('/api/accounts/admin', {
+                method: 'POST',
+                body: {
+                    accounts: [
+                        account
+                    ],
+                    supplier: info.supplier,
+                }
+            }).catch(() => {
+                data.errorMsg = `Error Adding Account: ${account.user}`;
+            })
+        })
+    ).then((res) => {
+        if (data.errorMsg) return;
+        alert(`${res.length} Accounts Added!`)
     }).finally(() => {
         data.loading = false;
     })
+
+
+    // await useFetchApi('/api/accounts/admin', {
+    //     method: 'POST',
+    //     body: {
+    //         supplier: info.supplier,
+    //         accounts: info.accounts,
+    //     }
+    // }).then((res) => {
+    //     alert(`${res} Accounts Added!`)
+    // }).catch((err) => {
+    //     data.errorMsg = err;
+    // }).finally(() => {
+    //     data.loading = false;
+    // })
 }
 
 const formatAccountsToJsonArray = (accounts: string, format: string) => {
@@ -130,71 +157,95 @@ const formatAccountsToJsonArray = (accounts: string, format: string) => {
             return accountsJsonArray;
         }
 
-        if (format.includes('REGION')) {
+        if (format.includes('REGION:USER:PASS:LEVEL:BE:OE:CHAMPIONS:SKIN_SHARDS')) {
             accountJson['region'] = accountArray[0].toUpperCase();
-        }
+            accountJson['user'] = accountArray[1];
+            accountJson['pass'] = accountArray[2];
+            accountJson['be'] = parseInt(accountArray[4]);
+            accountJson['beSlug'] = parseInt(accountArray[4].substring(0, 1)) + '0';
 
-        if (format.includes('USER')) {
-            if (format.includes('REGION:USER')) {
-                accountJson['user'] = accountArray[1];
-            } else {
-                accountJson['user'] = accountArray[0];
-            }
-        }
+            if (accountArray[7] !== undefined && accountArray[7] !== '0') {
+                const skins = accountArray[7].split('_');
 
-        if (format.includes('PASS')) {
-            if (format.includes('REGION:USER')) {
-                accountJson['pass'] = accountArray[2];
-            } else {
-                accountJson['pass'] = accountArray[1];
+                const formatted = skins.map((skin) => skin.replace(/ *\([^)]*\) */g, ""))
+                accountJson['skins'] = [
+                    ...formatted.map((skin) => {
+                        return {
+                            skinName: skin,
+                        }
+                    })
+                ]
             }
-        }
+            accountJson['slug'] = props.slug ? `${props.slug}` : `${accountJson['region'].toLowerCase()}${accountJson['beSlug']}k`
 
-        if (format.includes('BE')) {
-            if (format.includes('REGION:USER')) {
-                accountJson['be'] = parseInt(accountArray[3]);
-                accountJson['beSlug'] = parseInt(accountArray[3].substring(0, 1)) + '0';
-            } else {
-                accountJson['be'] = parseInt(accountArray[2]);
-                accountJson['beSlug'] = parseInt(accountArray[2].substring(0, 1)) + '0';
-            }
+            accountsJsonArray.push(accountJson);
         } else {
-            accountJson['be'] = 0;
-        }
+            if (format.includes('REGION')) {
+                accountJson['region'] = accountArray[0].toUpperCase();
+            }
 
-        if (format.includes('SKIN_SHARDS')) {
-            if (format.includes('REGION:USER')) {
-                if (accountArray[4] !== undefined) {
-                    const skins = accountArray[4].split('_');
-
-                    const formatted = skins.map((skin) => skin.replace(/ *\([^)]*\) */g, ""))
-                    accountJson['skins'] = [
-                        ...formatted.map((skin) => {
-                            return {
-                                skinName: skin,
-                            }
-                        })
-                    ]
-                }
-            } else {
-                if (accountArray[2] !== undefined) {
-                    const skins = accountArray[2].split('_');
-
-                    const formatted = skins.map((skin) => skin.replace(/ *\([^)]*\) */g, ""))
-                    accountJson['skins'] = [
-                        ...formatted.map((skin) => {
-                            return {
-                                skinName: skin,
-                            }
-                        })
-                    ]
+            if (format.includes('USER')) {
+                if (format.includes('REGION:USER')) {
+                    accountJson['user'] = accountArray[1];
+                } else {
+                    accountJson['user'] = accountArray[0];
                 }
             }
+
+            if (format.includes('PASS')) {
+                if (format.includes('REGION:USER')) {
+                    accountJson['pass'] = accountArray[2];
+                } else {
+                    accountJson['pass'] = accountArray[1];
+                }
+            }
+
+            if (format.includes('BE')) {
+                if (format.includes('REGION:USER')) {
+                    accountJson['be'] = parseInt(accountArray[3]);
+                    accountJson['beSlug'] = parseInt(accountArray[3].substring(0, 1)) + '0';
+                } else {
+                    accountJson['be'] = parseInt(accountArray[2]);
+                    accountJson['beSlug'] = parseInt(accountArray[2].substring(0, 1)) + '0';
+                }
+            } else {
+                accountJson['be'] = 0;
+            }
+
+            if (format.includes('SKIN_SHARDS')) {
+                if (format.includes('REGION:USER')) {
+                    if (accountArray[4] !== undefined) {
+                        const skins = accountArray[4].split('_');
+
+                        const formatted = skins.map((skin) => skin.replace(/ *\([^)]*\) */g, ""))
+                        accountJson['skins'] = [
+                            ...formatted.map((skin) => {
+                                return {
+                                    skinName: skin,
+                                }
+                            })
+                        ]
+                    }
+                } else {
+                    if (accountArray[2] !== undefined) {
+                        const skins = accountArray[2].split('_');
+
+                        const formatted = skins.map((skin) => skin.replace(/ *\([^)]*\) */g, ""))
+                        accountJson['skins'] = [
+                            ...formatted.map((skin) => {
+                                return {
+                                    skinName: skin,
+                                }
+                            })
+                        ]
+                    }
+                }
+            }
+
+            accountJson['slug'] = props.slug ? `${props.slug}` : `${accountJson['region'].toLowerCase()}${accountJson['beSlug']}k`
+
+            accountsJsonArray.push(accountJson);
         }
-
-        accountJson['slug'] = props.slug ? `${props.slug}` : `${accountJson['region'].toLowerCase()}${accountJson['beSlug']}k`
-
-        accountsJsonArray.push(accountJson);
     }
 
     return accountsJsonArray;

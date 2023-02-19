@@ -299,3 +299,113 @@ export const getOrdersAdmin = async (q: string, take: number, skip: number) => {
 
 }
 
+export const getOrderAdmin = async (id: string) => {
+    return prisma.order.findUnique({
+        where: {
+            id: id,
+        },
+        select: {
+            id: true,
+            status: true,
+            billingEmail: true,
+            quantity: true,
+            total: true,
+            product: {
+                select: {
+                    name: true,
+                    image: true,
+                    region: true,
+                    uniqueIdentifier: true,
+                    category: true,
+                    description: true,
+                }
+            },
+            skin: {
+                select: {
+                    name: true,
+                    image: true,
+                    rarity: true,
+                },
+            },
+            accounts: {
+                select: {
+                    id: true,
+                    status: true,
+                    license: {
+                        select: {
+                            username: true,
+                            password: true,
+                        },
+                    }
+                }
+            },
+            couponCode: true,
+            updatedAt: true,
+            createdAt: true,
+        }
+    })
+}
+
+export const getOrdersAdminByEmail = async (email: string, take: number, skip: number, id: string) => {
+    return prisma.$transaction([
+        prisma.order.count({
+            where: {
+                AND: [
+                    {
+                        billingEmail: {
+                            equals: email,
+                            mode: 'insensitive',
+                        },
+                    },
+                    {
+                        id: {
+                            not: id,
+                            mode: 'insensitive',
+                        },
+                    }
+                ]
+            },
+        }),
+        prisma.order.findMany({
+            where: {
+                AND: [
+                    {
+                        billingEmail: {
+                            equals: email,
+                            mode: 'insensitive',
+                        },
+                    },
+                    {
+                        id: {
+                            not: id,
+                            mode: 'insensitive',
+                        },
+                    }
+                ]
+            },
+            take: take,
+            skip: skip,
+            orderBy: {
+                createdAt: 'desc',
+            },
+            select: {
+                id: true,
+                status: true,
+                billingEmail: true,
+                quantity: true,
+                total: true,
+                product: {
+                    select: {
+                        name: true,
+                    }
+                },
+                skin: {
+                    select: {
+                        name: true,
+                    },
+                },
+            },
+        })
+    ])
+
+}

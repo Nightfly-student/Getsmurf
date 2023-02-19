@@ -5,7 +5,7 @@
         'bg-red-500': status === 'CANCELLED',
         'bg-orange-500': status === 'PENDING',
         'bg-blue-500': status === 'CREATED',
-    }" class="rounded-20 p-1 px-2 text-center text-white">
+    }" class="rounded-20 p-1 px-5 text-center text-white">
         {{ status.toLowerCase() }}
     </div>
 </template>

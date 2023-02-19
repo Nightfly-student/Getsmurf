@@ -95,7 +95,7 @@ model SkinItem {
   id String @id @default(uuid())
 
   skinName String
-  skin Skin @relation(fields: [skinName], references: [name])
+  skin Skin @relation(fields: [skinName], references: [name], onUpdate: Cascade)
 
   accountId String
   account Account @relation(fields: [accountId], references: [id], onDelete: Cascade)
@@ -137,7 +137,7 @@ model Order {
   product Product? @relation(fields: [productId], references: [slug], onDelete: SetNull)
 
   skinName String?
-  skin Skin? @relation(fields: [skinName], references: [name], onDelete: SetNull)
+  skin Skin? @relation(fields: [skinName], references: [name], onDelete: SetNull, onUpdate: Cascade)
 
   accounts Account[]
 

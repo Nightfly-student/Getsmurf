@@ -11,7 +11,8 @@
             </p>
             <div class="bg-red-500 w-fit p-3 rounded-20 mx-auto mt-5">
                 <p>You can contact support through our
-                    <span class="text-black font-bold">Discord Server</span>
+                    <a href="https://discord.gg/bBqWZTd9Zg" target="_blank"><span class="text-black font-bold">Discord
+                            Server</span></a>
                 </p>
             </div>
         </div>

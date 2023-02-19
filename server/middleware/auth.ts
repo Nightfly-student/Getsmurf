@@ -12,6 +12,9 @@ export default defineEventHandler(async (event) => {
         '/api/blog/admin',
         '/api/blog/create',
         '/api/order/admin',
+        '/api/order/admin/item',
+        '/api/order/admin/email',
+        '/api/order/admin/complete',
         '/api/coupon/admin',
     ]
 
