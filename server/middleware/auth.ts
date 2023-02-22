@@ -8,6 +8,8 @@ export default defineEventHandler(async (event) => {
         '/api/auth/user',
         '/api/products/new',
         '/api/products/admin/product',
+        '/api/products/admin/region',
+        '/api/products/admin/skins',
         '/api/accounts/admin',
         '/api/blog/admin',
         '/api/blog/create',
@@ -15,6 +17,7 @@ export default defineEventHandler(async (event) => {
         '/api/order/admin/item',
         '/api/order/admin/email',
         '/api/order/admin/complete',
+        '/api/order/admin/replace',
         '/api/coupon/admin',
     ]
 

@@ -84,11 +84,23 @@
                                             </p>
                                         </div>
                                         <div>
-                                            <button class="bg-zinc-700 text-white rounded-20 px-5 py-2">
+                                            <button @click="toggleModal(account)"
+                                                v-if="account.status !== 'BANNED' && account.status !== 'WRONG'"
+                                                class="bg-zinc-700 text-white rounded-20 px-5 py-2">
                                                 Replace
                                             </button>
+                                            <div v-if="account.status === 'BANNED'"
+                                                class="bg-red-500 text-white rounded-20 px-5 py-2">
+                                                Banned
+                                            </div>
+                                            <div v-if="account.status === 'WRONG'"
+                                                class="bg-orange-500 text-white rounded-20 px-5 py-2">
+                                                Bad Credentials
+                                            </div>
                                         </div>
                                     </div>
+                                    <p class="p-2 px-5 text-gray-400" v-if="account.status === 'REFUND'">This is a
+                                        replacement account</p>
                                 </li>
                             </ul>
                         </div>
@@ -125,6 +137,7 @@
                 </div>
             </div>
         </div>
+        <ModalReplaceAccount :account="selectedAccount" :open="data.toggleModal" @modalEvent="toggleModal" />
     </div>
 </template>
 
@@ -135,6 +148,17 @@ definePageMeta({
     middleware: ["admin-only"],
     layout: "admin",
 })
+
+const data = reactive({
+    toggleModal: false,
+})
+
+const selectedAccount = ref<any>({})
+
+const toggleModal = (account: Object) => {
+    selectedAccount.value = account
+    data.toggleModal = !data.toggleModal
+}
 
 const order = ref<any>({})
 const orders = ref<any>([])
@@ -152,6 +176,9 @@ const getOrdersFromEmail = async () => {
 
 
 await getOrder().then(() => {
+    if (order.value.status === 'PAID') {
+        selectedAccount.value = order.value.accounts[0]
+    }
     getOrdersFromEmail()
 })
 

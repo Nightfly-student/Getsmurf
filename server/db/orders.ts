@@ -336,6 +336,22 @@ export const getOrderAdmin = async (id: string) => {
                             username: true,
                             password: true,
                         },
+                    },
+                    Product: {
+                        select: {
+                            name: true,
+                            region: true,
+                        }
+                    },
+                    Order: {
+                        select: {
+                            id: true,
+                            skin: {
+                                select: {
+                                    name: true,
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -408,4 +424,34 @@ export const getOrdersAdminByEmail = async (email: string, take: number, skip: n
         })
     ])
 
+}
+
+export const addAccountToOrder = async (id: string, accountId: string) => {
+    return prisma.order.update({
+        where: {
+            id: id,
+        },
+        data: {
+            accounts: {
+                connect: {
+                    id: accountId,
+                },
+            },
+        },
+    })
+}
+
+export const updateOrderSkin = async (id: string, skinId: string) => {
+    return prisma.order.update({
+        where: {
+            id: id,
+        },
+        data: {
+            skin: {
+                connect: {
+                    id: skinId,
+                },
+            },
+        },
+    })
 }

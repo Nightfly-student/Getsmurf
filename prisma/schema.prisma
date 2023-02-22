@@ -258,6 +258,7 @@ enum Region {
 enum AccountStatus {
   AVAILABLE
   BANNED
+  WRONG
   PENDING
   REFUND
   GIVEAWAY

@@ -195,3 +195,40 @@ export const getProductBySkinName = async (skinName: string, region: string) => 
         }
     })
 }
+
+export const getSkinsByRegion = async (region: Region) => {
+    return prisma.skin.findMany({
+        where: {
+            AND: [
+
+                {
+                    SkinItem: {
+                        some: {
+                            account: {
+                                status: 'AVAILABLE',
+                            }
+                        }
+                    },
+                },
+                {
+                    SkinItem: {
+                        some: {
+                            account: {
+                                Product: {
+                                    region
+                                }
+                            }
+                        }
+                    },
+                }
+            ],
+        },
+        select: {
+            name: true,
+            identifier: true,
+        },
+        orderBy: {
+            name: 'asc'
+        }
+    })
+}

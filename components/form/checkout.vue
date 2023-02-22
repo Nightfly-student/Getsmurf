@@ -125,8 +125,6 @@ const checkout = async (e: Event, values: any) => {
 }
 
 const handleBlur = async (value: string) => {
-    console.log(value)
-
     if (value.length > 0) {
         data.loading = true
         await $fetch(`/api/coupon/${value}`).then((res) => {
