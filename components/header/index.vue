@@ -19,7 +19,7 @@
                             class="outline outline-1 outline-red-500 hover:bg-red-500 text-lg font-semibold p-3 px-3 rounded-xl shadow-md">
 
                             <div class="flex gap-3">
-                                <CurrencyEuroIcon class="w-5" />
+                                <CursorArrowRippleIcon class="w-5" />
                                 Smurfs
                             </div>
 
@@ -48,7 +48,7 @@
 
 <script lang="ts" setup>
 import UserIcon from '@heroicons/vue/24/outline/UserIcon'
-import CurrencyEuroIcon from '@heroicons/vue/24/outline/CurrencyEuroIcon';
+import CursorArrowRippleIcon from '@heroicons/vue/24/outline/CursorArrowRippleIcon';
 </script>
 
 <style scoped>

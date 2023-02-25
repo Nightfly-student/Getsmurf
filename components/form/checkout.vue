@@ -101,7 +101,7 @@ const checkout = async (e: Event, values: any) => {
     e.preventDefault()
     data.loading = true
 
-    await $fetch('/api/order', {
+    const link = await $fetch('/api/order', {
         method: 'POST',
         body: JSON.stringify({
             productSlug: !props.product.skin ? props.product.slug : props.product.name,
@@ -114,15 +114,16 @@ const checkout = async (e: Event, values: any) => {
             region: props.product.region,
             coupon: coupon.value,
         })
-    }).then((res) => {
-        window.open(
-            res as string,
-            "_blank"
-        )
-    }).finally(() => {
-        data.loading = false
     })
+
+    window.open(
+        link as string,
+        "_self"
+    )
+
+    data.loading = false
 }
+
 
 const handleBlur = async (value: string) => {
     if (value.length > 0) {
