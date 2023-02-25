@@ -70,7 +70,7 @@ export default defineEventHandler(async (event) => {
             const arrayOfAccounts = []
             arrayOfAccounts.push(replacementAccount)
 
-            await sendOrderReplacementEmail(order.billingEmail, order.id, arrayOfAccounts, `${replacementAccount.Skins[0].skinName} - ${region}`, `${config.url}/orders/${order.id}`)
+            await sendOrderReplacementEmail(order.billingEmail, order.id, arrayOfAccounts, `${replacementAccount.Skins[0].skinName} - ${region}`, `${config.appUrl}/orders/${order.id}`)
         }
     }
 
@@ -86,7 +86,7 @@ export default defineEventHandler(async (event) => {
             const arrayOfAccounts = []
             arrayOfAccounts.push(replacementAccount)
 
-            await sendOrderReplacementEmail(order.billingEmail, order.id, arrayOfAccounts, replacementAccount.Product.name, `${config.url}/orders/${order.id}`)
+            await sendOrderReplacementEmail(order.billingEmail, order.id, arrayOfAccounts, replacementAccount.Product.name, `${config.appUrl}/orders/${order.id}`)
 
         }
     }
