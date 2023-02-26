@@ -56,6 +56,7 @@ export const getProductsByRegion = async (region: Region) => {
             price: true,
             image: true,
             category: true,
+            rank: true,
             region: true,
             Accounts: {
                 where: {

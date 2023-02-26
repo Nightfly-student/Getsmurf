@@ -7,6 +7,39 @@
                         alt="GetSmurf Logo" class="h-20" />
                     <p class="text-3xl font-bold text-left">Get Smurf</p>
                 </div>
+                <div class="ml-5 mt-2 ">
+                    <div class="flex gap-3 pb-4">
+                        <a href="https://www.tiktok.com/@getsmurf" target="_blank">
+                            <div class="bg-zinc-700 hover:bg-zinc-600 rounded-full w-8 h-8">
+                                <div class="w-fit mx-auto pt-2">
+                                    <IconsTiktok class="w-4 text-red-500" />
+                                </div>
+                            </div>
+                        </a>
+                        <a href="https://discord.gg/bBqWZTd9Zg" target="_blank">
+                            <div class="bg-zinc-700 hover:bg-zinc-600 rounded-full w-8 h-8">
+                                <div class="w-fit mx-auto pt-2">
+                                    <IconsDiscord class="w-4 text-red-500" />
+                                </div>
+                            </div>
+                        </a>
+                        <a href="https://instagram.com/get.smurf" target="_blank">
+                            <div class="bg-zinc-700 hover:bg-zinc-600 rounded-full w-8 h-8">
+                                <div class="w-fit mx-auto pt-2">
+                                    <IconsInstagram class="w-4 text-red-500" />
+                                </div>
+                            </div>
+                        </a>
+                        <a href="https://www.facebook.com/profile.php?id=100090660360647&mibextid=ZbWKwL" target="_blank">
+                            <div class="bg-zinc-700 hover:bg-zinc-600 rounded-full w-8 h-8">
+                                <div class="w-fit mx-auto pt-2">
+                                    <IconsFacebook class="w-4 text-red-500" />
+                                </div>
+                            </div>
+                        </a>
+
+                    </div>
+                </div>
                 <p class="text-sm md:pl-6">2023 GETSMURF, All Rights Reserved</p>
             </div>
             <div>

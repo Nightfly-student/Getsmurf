@@ -1,11 +1,11 @@
 <template>
-    <div class="bg-zinc-800 p-2 w-full max-w-100 lg:max-w-sm">
-        <div class="w-fit mx-auto">
-            <img class="custom-logo mx-16" :src="product.image" :alt="product.name" />
+    <div class="bg-zinc-800 p-2 rounded-20 shadow-lg">
+        <div class="w-fit mx-auto px-2 pt-2">
+            <img class="custom-logo w-full rounded-20" :src="product.image" :alt="product.name" />
         </div>
 
-        <div>
-            <h2 class="text-2xl font-semibold text-center">{{ product.category }}</h2>
+        <div class="w-fit mx-auto pt-3">
+            <h2 class="text-xl font-bold text-center w-64">{{ product.name }}</h2>
         </div>
 
         <div class="flex w-fit mx-auto mr-24 text-red-500 pt-5">
@@ -18,56 +18,55 @@
             <p class="text-5xl font-semibold">{{ product.price }}</p>
         </div>
 
-        <div class="w-fit mx-auto pt-7">
-            <ul class="space-y-4 font-semibold">
-                <li>
-                    <div class="flex gap-3">
-                        <CheckCircleIcon class="text-red-500 w-6" />
-                        <p>{{ product.slug.replace(product.region.toLowerCase(), '') }}+ Blue Essence</p>
-                    </div>
-                </li>
-                <li>
-                    <div class="flex gap-3">
-                        <CheckCircleIcon class="text-red-500 w-6" />
-                        <p>Level 30+</p>
-                    </div>
-                </li>
-                <li>
-                    <div class="flex gap-3">
-                        <CheckCircleIcon class="text-red-500 w-6" />
-                        <p>Ranked Ready</p>
-                    </div>
-                </li>
-                <li>
-                    <div class="flex gap-3">
-                        <CheckCircleIcon class="text-red-500 w-6" />
-                        <p>30 Days Warranty</p>
-                    </div>
-                </li>
-                <li>
-                    <div class="flex gap-3">
-                        <CheckCircleIcon class="text-red-500 w-6" />
-                        <p>Honor Level 2+</p>
-                    </div>
-                </li>
-            </ul>
-        </div>
-
-        <div class="pt-5 pb-3 px-2">
+        <div class="pt-5 px-2">
             <button v-if="product.Accounts !== 0" @click="buy"
-                class="bg-red-600 hover:bg-red-700 text-xl w-full p-3 px-6 rounded-xl shadow-md">
+                class="bg-red-600 hover:bg-red-700 text-lg w-full p-2 px-5 rounded-20 shadow-md flex justify-center gap-3">
+                <ShoppingBagIcon class="w-6" />
                 Buy Now
             </button>
             <button v-else disabled
-                class="bg-red-600 disabled:bg-red-600/25 hover:bg-red-700 text-xl w-full p-3 px-6 rounded-xl shadow-md">
+                class="bg-red-600 disabled:bg-red-600/25 hover:bg-red-700 text-lg w-full p-2 px-5 rounded-20 shadow-md">
                 Out of Stock
             </button>
+        </div>
+
+        <div class="h-0.5 mt-3 mx-5 rounded-20 bg-gray-600 w-100" />
+
+        <div class="w-fit mx-5 pt-5 pb-3">
+            <ul class="space-y-4">
+                <li>
+                    <div class="flex gap-1">
+                        <CubeIcon class="text-red-500 w-6" />
+                        <p class="text-gray-400">Blue Essence <span class="text-white font-semibold pl-2">{{
+                            product.slug.replace(product.region.toLowerCase(), '').replace('k', '') }}.000+ </span>
+                        </p>
+                    </div>
+                </li>
+                <li>
+                    <div class="flex gap-1">
+                        <StarIcon class="text-red-500 w-6" />
+                        <p class="text-gray-400">Rank <span class="text-white font-semibold pl-2">{{ product.rank }}</span>
+                        </p>
+                    </div>
+                </li>
+                <li>
+                    <div class="flex gap-1">
+                        <GlobeAltIcon class="text-red-500 w-6" />
+                        <p class="text-gray-400">Region <span class="text-white font-semibold pl-2">{{ product.region
+                        }}</span></p>
+                    </div>
+                </li>
+            </ul>
         </div>
     </div>
 </template>
 
 <script lang="ts" setup>
 import CheckCircleIcon from '@heroicons/vue/24/outline/CheckCircleIcon'
+import CubeIcon from '@heroicons/vue/24/outline/CubeIcon'
+import ShoppingBagIcon from '@heroicons/vue/24/outline/ShoppingBagIcon'
+import StarIcon from '@heroicons/vue/24/outline/StarIcon'
+import GlobeAltIcon from '@heroicons/vue/24/outline/GlobeAltIcon'
 
 const props = defineProps({
     product: {
@@ -86,8 +85,7 @@ const buy = () => {
 
 <style scoped>
 .custom-logo {
-    width: 175px;
-    height: 175px;
-    object-fit: contain;
+    height: max-content;
+    object-fit: cover;
 }
 </style>

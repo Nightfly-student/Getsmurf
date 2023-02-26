@@ -43,6 +43,7 @@ model Product {
   price Float
   image String
   category String
+  rank String @default("Fresh Unranked")
 
   uniqueIdentifier String @unique
   region Region @default(EUW)
@@ -51,6 +52,22 @@ model Product {
 
   Accounts Account[]
   Orders Order[]
+
+  Item Collection? @relation(fields: [ItemSlug], references: [slug])
+  ItemSlug String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Collection {
+  id String @id @default(uuid())
+
+  slug String @unique
+  name String @unique
+  description String
+
+  Products Product[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

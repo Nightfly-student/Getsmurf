@@ -32,7 +32,7 @@
                         <div class="flex justify-between items-center gap-3">
                             <p v-if="!product.skin" class="text-gray-500">Price Per Account:</p>
                             <p v-else class="text-gray-500">Price For Account:</p>
-                            <p>{{ price.toFixed(2) }}$</p>
+                            <p>&euro;{{ price.toFixed(2) }}</p>
                         </div>
                     </li>
                     <li>

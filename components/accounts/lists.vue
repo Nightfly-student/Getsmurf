@@ -1,8 +1,12 @@
 <template>
     <div>
-        <div class="flex flex-wrap gap-10 justify-center items-center px-5" v-if="products.length !== 0">
-            <div v-for="product in products" class="grow">
+        <div class="grid grid-cols-12 gap-10 justify-center items-center mx-auto max-w-none lg:max-w-5xl"
+            v-if="products.length !== 0">
+            <div v-for="product in products" class="col-span-12 md:col-span-6 lg:col-span-4">
                 <AccountsCard :product="(product as Object)" @buy="buy" />
+            </div>
+            <div class="col-span-12 md:col-span-6 lg:col-span-4">
+                <AccountsSkinCard :region="products[0].region" />
             </div>
         </div>
         <div v-else>
@@ -14,7 +18,6 @@
             <ModalCheckout @modalEvent="toggleModal('checkout')" :product="selectedProduct" :open="data.checkout" />
         </ClientOnly>
     </div>
-
 </template>
 
 <script lang="ts" setup>
