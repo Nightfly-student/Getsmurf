@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="grid grid-cols-12 gap-10 justify-center items-center mx-auto max-w-none lg:max-w-5xl"
+        <div class="grid grid-cols-12 gap-5 xl:gap-10 justify-center items-center mx-auto max-w-none lg:max-w-5xl"
             v-if="products.length !== 0">
             <div v-for="product in products" class="col-span-12 md:col-span-6 lg:col-span-4">
                 <AccountsCard :product="(product as Object)" @buy="buy" />

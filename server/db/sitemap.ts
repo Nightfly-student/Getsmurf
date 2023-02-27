@@ -10,3 +10,11 @@ export const getRoutesBlogPosts = async () => {
         },
     });
 }
+
+export const getRoutesProducts = async () => {
+    return await prisma.product.findMany({
+        select: {
+            slug: true,
+        },
+    });
+}

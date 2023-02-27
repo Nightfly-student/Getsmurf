@@ -5,7 +5,9 @@
         </div>
 
         <div class="w-fit mx-auto pt-3">
-            <h2 class="text-xl font-bold text-center w-64">{{ product.name }}</h2>
+            <NuxtLink :to="`/products/${product.slug}`">
+                <h2 class="text-xl font-bold text-center w-64 hover:text-red-500">{{ product.name }}</h2>
+            </NuxtLink>
         </div>
 
         <div class="flex w-fit mx-auto mr-24 text-red-500 pt-5">
@@ -38,7 +40,7 @@
                     <div class="flex gap-1">
                         <CubeIcon class="text-red-500 w-6" />
                         <p class="text-gray-400">Blue Essence <span class="text-white font-semibold pl-2">{{
-                            product.slug.replace(product.region.toLowerCase(), '').replace('k', '') }}.000+ </span>
+                            product.uniqueIdentifier.replace(product.region, '') }}.000+ </span>
                         </p>
                     </div>
                 </li>

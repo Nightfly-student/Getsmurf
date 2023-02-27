@@ -49,8 +49,7 @@
 
             <div class="col-span-12">
                 <div>
-                    <button type="submit" @click="submitLogin($event, values)"
-                        :disabled="!formMeta.valid || data.loading"
+                    <button type="submit" @click="submitLogin($event, values)" :disabled="!formMeta.valid || data.loading"
                         class="text-white w-full disabled:bg-red-500/20 font-bold bg-red-500 hover:bg-red-500/75 p-3 rounded-20">
                         <IconsSpinner class="w-5 h-5" :loading="data.loading" />
                         Add Accounts
@@ -242,7 +241,7 @@ const formatAccountsToJsonArray = (accounts: string, format: string) => {
                 }
             }
 
-            accountJson['slug'] = props.slug ? `${props.slug}` : `${accountJson['region'].toLowerCase()}${accountJson['beSlug']}k`
+            accountJson['slug'] = props.slug ? `${props.slug}` : `${accountJson['region']}${accountJson['beSlug']}`
 
             accountsJsonArray.push(accountJson);
         }

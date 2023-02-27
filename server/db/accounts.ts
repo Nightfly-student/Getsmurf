@@ -9,7 +9,7 @@ export const createManyAccounts = async (supplier: any, accounts: any[]) => {
             data: {
                 Product: {
                     connect: {
-                        slug: account.slug,
+                        uniqueIdentifier: account.slug,
                     },
                 },
                 Supplier: {

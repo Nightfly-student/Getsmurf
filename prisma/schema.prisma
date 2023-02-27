@@ -85,7 +85,7 @@ model Account {
   status AccountStatus @default(AVAILABLE)
 
   ProductSlug String
-  Product Product @relation(fields: [ProductSlug], references: [slug])
+  Product Product @relation(fields: [ProductSlug], references: [slug], onUpdate: Cascade)
 
   OrderId String?
   Order Order? @relation(fields: [OrderId], references: [id])

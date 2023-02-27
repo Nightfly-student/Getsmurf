@@ -24,7 +24,8 @@
                     <li>
                         <div class="flex justify-between items-center gap-3">
                             <p class="text-gray-500">Blue Essence:</p>
-                            <p v-if="!product.skin">{{ product.slug.replace(product.region.toLowerCase(), '') }}+ BE</p>
+                            <p v-if="!product.skin">{{ product.uniqueIdentifier.replace(product.region, '') }}.000+ BE
+                            </p>
                             <p v-else>30-60k+ BE</p>
                         </div>
                     </li>

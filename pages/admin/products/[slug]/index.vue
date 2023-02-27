@@ -39,8 +39,7 @@
                                     </tr>
                                 </template>
                                 <template #body>
-                                    <TableTrBody v-for="order in orders" :key="order.id"
-                                        class="border-b-2 border-gray-600">
+                                    <TableTrBody v-for="order in orders" :key="order.id" class="border-b-2 border-gray-600">
                                         <TableTh>{{ order.billingEmail }}</TableTh>
                                         <TableTh>{{ order.status }}</TableTh>
                                     </TableTrBody>
@@ -57,7 +56,7 @@
                     <h2 class="text-xl text-center">Add Accounts</h2>
                     <p class="text-center text-sm">Accounts added here will be for this product only!</p>
                     <div class="pt-10">
-                        <AccountsAdd :slug="product.slug" />
+                        <AccountsAdd :slug="product.uniqueIdentifier" />
                     </div>
                 </div>
             </div>
