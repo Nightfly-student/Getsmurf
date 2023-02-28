@@ -21,14 +21,20 @@
         </div>
 
         <div class="pt-5 px-2">
-            <button v-if="product.Accounts !== 0" @click="buy"
+            <button v-if="product.Accounts && product.Accounts !== 0" @click="buy"
                 class="bg-red-600 hover:bg-red-700 text-lg w-full p-2 px-5 rounded-20 shadow-md flex justify-center gap-3">
                 <ShoppingBagIcon class="w-6" />
                 Buy Now
             </button>
-            <button v-else disabled
+
+            <button v-else-if="product.Accounts === 0" disabled
                 class="bg-red-600 disabled:bg-red-600/25 hover:bg-red-700 text-lg w-full p-2 px-5 rounded-20 shadow-md">
                 Out of Stock
+            </button>
+
+            <button v-else="!product.Accounts" @click="navigateTo(`/products/${product.slug}`)"
+                class="bg-red-600 disabled:bg-red-600/25 hover:bg-red-700 text-lg w-full p-2 px-5 rounded-20 shadow-md">
+                View Account
             </button>
         </div>
 

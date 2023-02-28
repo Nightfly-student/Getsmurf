@@ -1,4 +1,4 @@
-import { getRoutesBlogPosts, getRoutesProducts } from "~~/server/db/sitemap";
+import { getCollectionRoutes, getRoutesBlogPosts, getRoutesProducts } from "~~/server/db/sitemap";
 
 export default defineEventHandler(async (event) => {
     const config = useRuntimeConfig();
@@ -17,6 +17,12 @@ export default defineEventHandler(async (event) => {
 
     products.forEach((product) => {
         mainRoutes.push(`/products/${product.slug}`)
+    })
+
+    const collections = await getCollectionRoutes()
+
+    collections.forEach((collection) => {
+        mainRoutes.push(`/categories/${collection.slug}`)
     })
 
     return mainRoutes

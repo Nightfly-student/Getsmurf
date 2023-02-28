@@ -15,7 +15,7 @@
                 <div>
                     <h2 class="text-xl font-semibold pb-3 pt-5">Our Accounts</h2>
                     <div class="flex gap-5">
-                        <a href="#cheap"
+                        <a href="#" @click="onLinkClick($event)"
                             class="outline outline-1 outline-red-500 hover:bg-red-500 text-lg font-semibold p-3 px-3 rounded-xl shadow-md">
 
                             <div class="flex gap-3">
@@ -49,6 +49,13 @@
 <script lang="ts" setup>
 import UserIcon from '@heroicons/vue/24/outline/UserIcon'
 import CursorArrowRippleIcon from '@heroicons/vue/24/outline/CursorArrowRippleIcon';
+
+const onLinkClick = (e: Event) => {
+    e.preventDefault();
+
+    document.getElementById('cheap')?.scrollIntoView({ behavior: 'smooth' })
+}
+
 </script>
 
 <style scoped>

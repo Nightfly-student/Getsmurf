@@ -13,16 +13,14 @@
                     <li>
                         <button class="cursor-pointer w-10 h-10 relative" @click="openMobile()">
                             <div class="block absolute transform">
-                                <span class="block absolute w-7 h-0.5 bg-white transition duration-500 ease-in-out"
-                                    :class="{
-                                        'rotate-45': openMobileMenu,
-                                        ' -translate-y-2': !openMobileMenu,
-                                    }"></span>
-                                <span class="block absolute w-6 h-0.5 bg-white transition duration-500 ease-in-out"
-                                    :class="{
-                                        'opacity-0': openMobileMenu,
-                                        'opacity-100': !openMobileMenu,
-                                    }"></span>
+                                <span class="block absolute w-7 h-0.5 bg-white transition duration-500 ease-in-out" :class="{
+                                    'rotate-45': openMobileMenu,
+                                    ' -translate-y-2': !openMobileMenu,
+                                }"></span>
+                                <span class="block absolute w-6 h-0.5 bg-white transition duration-500 ease-in-out" :class="{
+                                    'opacity-0': openMobileMenu,
+                                    'opacity-100': !openMobileMenu,
+                                }"></span>
                                 <span class="block absolute h-0.5 bg-white transition duration-500 ease-in-out" :class="{
                                     '-rotate-45 w-7': openMobileMenu,
                                     ' translate-y-2 w-5': !openMobileMenu,
@@ -51,12 +49,98 @@
                 <li class="block px-4 py-2" v-if="logged && user?.role === 'ADMIN'">
                     <a href="#" @click="mobileRouter($event, '/admin')">Admin Panel</a>
                 </li>
+                <li class="block px-4 py-2">
+                    <!-- Tailwind Dropdown of Account categories -->
+                    <button @click="toggleDropdown">
+                        <div class="flex gap-1 items-center">
+                            LoL Accounts
+                            <EllipsisVerticalIcon class="w-5" />
+                        </div>
+                    </button>
+                    <ul v-if="openDropdown" v-click-outside="toggleDropdown"
+                        class="bg-zinc-700 w-80 p-3 rounded-md absolute z-10 space-y-5 mt-3 shadow-md">
+                        <li>
+                            <a href="#" @click="mobileRouter($event, '/categories/euw-lol-accounts')">
+                                <div class="flex gap-3 hover:text-red-500 hover:stroke-red-500">
+                                    <IconsEUW class="w-5" /> EUW Accounts
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" @click="mobileRouter($event, `/categories/eune-lol-accounts`)">
+                                <div class="flex gap-3 hover:text-red-500 hover:stroke-red-500">
+                                    <IconsEUNE class="w-5" /> EUNE Accounts
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" @click="mobileRouter($event, '/categories/na-lol-accounts')">
+                                <div class="flex gap-3 hover:text-red-500 hover:stroke-red-500">
+                                    <IconsNA class="w-5" /> NA Accounts
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" @click="mobileRouter($event, '/categories/oce-lol-accounts')">
+                                <div class="flex gap-3 hover:text-red-500 hover:stroke-red-500">
+                                    <IconsOCE class="w-5" /> OCE Accounts
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" @click="mobileRouter($event, '/categories/ru-lol-accounts')">
+                                <div class="flex gap-3 hover:text-red-500 hover:stroke-red-500">
+                                    <IconsRU class="w-5" /> RU Accounts
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" @click="mobileRouter($event, '/categories/br-lol-accounts')">
+                                <div class="flex gap-3 hover:text-red-500 hover:stroke-red-500">
+                                    <IconsBR class="w-5" /> BR Accounts
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" @click="mobileRouter($event, '/categories/lan-lol-accounts')">
+                                <div class="flex gap-3 hover:text-red-500 hover:stroke-red-500">
+                                    <IconsLAN class="w-5" /> LAN Accounts
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" @click="mobileRouter($event, '/categories/las-lol-accounts')">
+                                <div class="flex gap-3 hover:text-red-500 hover:stroke-red-500">
+                                    <IconsLAS class="w-5" /> LAS Accounts
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" @click="mobileRouter($event, '/categories/tr-lol-accounts')">
+                                <div class="flex gap-3 hover:text-red-500 hover:stroke-red-500">
+                                    <IconsTR class="w-5" /> TR Accounts
+                                </div>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" @click="mobileRouter($event, '/lol-skins-account')">
+                                <div class="flex gap-3 hover:text-red-500 hover:stroke-red-500">
+                                    <FingerPrintIcon class="w-5" />
+                                    Skin Accounts
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
             </ul>
         </div>
     </div>
 </template>
 
 <script lang="ts" setup>
+import FingerPrintIcon from "@heroicons/vue/24/outline/FingerPrintIcon";
+import EllipsisVerticalIcon from "@heroicons/vue/24/outline/EllipsisVerticalIcon";
+
 const props = defineProps({
     logged: {
         type: Boolean,
@@ -89,6 +173,12 @@ const mobileRouter = (e: Event, route: string) => {
     }
     router.push(route)
     checkBody()
+}
+
+const openDropdown = ref(false)
+
+const toggleDropdown = () => {
+    openDropdown.value = !openDropdown.value
 }
 
 </script>

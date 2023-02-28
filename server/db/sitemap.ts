@@ -18,3 +18,11 @@ export const getRoutesProducts = async () => {
         },
     });
 }
+
+export const getCollectionRoutes = async () => {
+    return await prisma.collection.findMany({
+        select: {
+            slug: true,
+        },
+    });
+}
