@@ -7,6 +7,7 @@ import { sendOrderProcessingEmail } from "./mailing/orderPending";
 import { sendOrderFailedEmail } from "./mailing/orderFail";
 import { sendOrderSuccessEmail } from "./mailing/orderSuccess";
 import { updateCouponUses } from "../db/coupons";
+import { deleteMultipleKeys } from "./redis/deleteMultiple";
 
 const stripe = () => {
     const config = useRuntimeConfig();
@@ -136,6 +137,9 @@ export const handleStripeEvent = async (
                         await updateOrderAccount(order.id, account.id, 'PENDING', 'PENDING')
                     }
                 }
+                deleteMultipleKeys('getsmurf:products*')
+                deleteMultipleKeys('getsmurf:product*')
+
                 await sendOrderProcessingEmail(order.billingEmail, order.id, `${config.appUrl}/orders/${order.id}`)
                 return "Stripe webhook success";
             } catch (err: any) {
@@ -204,6 +208,9 @@ export const handleStripeEvent = async (
                     order.product ? order.product?.name : `${order.skin?.name} - ${(stripeEvent.data.object as any).metadata.region}`,
                     `${config.appUrl}/orders/${order.id}`
                 )
+
+                deleteMultipleKeys('getsmurf:products*')
+                deleteMultipleKeys('getsmurf:product*')
 
                 return "Stripe webhook success";
             } catch (err: any) {

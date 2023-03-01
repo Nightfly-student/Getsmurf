@@ -1,4 +1,5 @@
 import { getPostBySlug } from '~~/server/db/blogs';
+import redis from '~~/server/utils/redis';
 
 export default defineEventHandler(async (event) => {
     const { slug } = event.context.params;
@@ -10,6 +11,13 @@ export default defineEventHandler(async (event) => {
         )
     }
 
+    const cached = await redis.get(`getsmurf:post:${slug}`);
+
+    if (cached) {
+        return JSON.parse(cached)
+    }
+
+
     const getPost = await getPostBySlug(slug as string)
 
     if (!getPost) {
@@ -18,6 +26,8 @@ export default defineEventHandler(async (event) => {
             createError({ statusCode: 404, statusMessage: "Post not found" })
         )
     }
+
+    await redis.setex(`getsmurf:post:${slug}`, 60 * 60 * 168, JSON.stringify(getPost))
 
     return getPost
 });

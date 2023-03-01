@@ -1,6 +1,7 @@
 import { sendError } from "h3";
 import { upsertChampions } from "~~/server/db/champions";
 import { upsertSkins } from "~~/server/db/skins";
+import { deleteMultipleKeys } from "~~/server/utils/redis/deleteMultiple";
 export default defineEventHandler(async (event) => {
     const body = await readBody(event);
 
@@ -12,6 +13,8 @@ export default defineEventHandler(async (event) => {
             createError({ statusCode: 403, statusMessage: "Unauthorized" })
         );
     }
+
+    deleteMultipleKeys('getsmurf:champions')
 
     const versionData: any[] = await $fetch("https://ddragon.leagueoflegends.com/api/versions.json");
 

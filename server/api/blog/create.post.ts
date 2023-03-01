@@ -5,6 +5,7 @@ import { object, string } from "yup";
 import filter from "leo-profanity";
 import { uploadImageToCloudinary } from "~~/server/utils/cloudinary";
 import { createBlog } from "~~/server/db/blogs";
+import { deleteMultipleKeys } from "~~/server/utils/redis/deleteMultiple";
 
 export default defineEventHandler(async (event) => {
     isAdminOrAbove(event.context.auth?.user, event)
@@ -125,6 +126,10 @@ export default defineEventHandler(async (event) => {
         }
 
         const blog = await createBlog(blogData);
+
+        deleteMultipleKeys(`getsmurf:post:*`)
+        deleteMultipleKeys(`getsmurf:posts:*`)
+        deleteMultipleKeys(`getsmurf:admin:posts:*`)
 
         return {
             blog,

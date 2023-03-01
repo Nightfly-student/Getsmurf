@@ -1,5 +1,6 @@
 import { deleteBlog } from "~~/server/db/blogs";
 import { isAdminOrAbove } from "~~/server/db/roleManager";
+import { deleteMultipleKeys } from "~~/server/utils/redis/deleteMultiple";
 
 export default defineEventHandler(async (event) => {
     isAdminOrAbove(event.context.auth?.user, event)
@@ -20,6 +21,10 @@ export default defineEventHandler(async (event) => {
 
     try {
         const blog = await deleteBlog(id as string)
+
+        deleteMultipleKeys(`getsmurf:post:*`)
+        deleteMultipleKeys(`getsmurf:posts:*`)
+        deleteMultipleKeys(`getsmurf:admin:posts:*`)
 
         return {
             message: "Post Deleted"

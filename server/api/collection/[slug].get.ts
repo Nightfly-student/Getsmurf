@@ -1,5 +1,6 @@
 import { sendError } from "h3";
 import { getCollectionBySlug } from "~~/server/db/collections";
+import redis from "~~/server/utils/redis";
 
 export default defineEventHandler(async (event) => {
     const { slug } = event.context.params;
@@ -14,6 +15,13 @@ export default defineEventHandler(async (event) => {
         );
     }
 
+    const cached = await redis.get(`getsmurf:collection:${slug}`);
+
+    if (cached) {
+        return JSON.parse(cached)
+    }
+
+
     const collection = await getCollectionBySlug(slug as string);
 
     if (!collection) {
@@ -25,6 +33,8 @@ export default defineEventHandler(async (event) => {
             })
         );
     }
+
+    await redis.setex(`getsmurf:collection:${slug}`, 60 * 60 * 168, JSON.stringify(collection))
 
     return collection
 });

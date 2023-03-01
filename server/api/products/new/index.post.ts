@@ -3,6 +3,7 @@ import { sendError } from "h3";
 import { isAdminOrAbove } from "~~/server/db/roleManager";
 import { object, string, number } from "yup";
 import { createProduct } from "~~/server/db/products";
+import { deleteMultipleKeys } from "~~/server/utils/redis/deleteMultiple";
 
 export default defineEventHandler(async (event) => {
     isAdminOrAbove(event.context.auth?.user, event)
@@ -97,6 +98,9 @@ export default defineEventHandler(async (event) => {
             identifier,
             image: cloudinary.secure_url,
         })
+
+        deleteMultipleKeys('getsmurf:product*')
+        deleteMultipleKeys('getsmurf:products*')
 
         return product
     } catch (err: any) {

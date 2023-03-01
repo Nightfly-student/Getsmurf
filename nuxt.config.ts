@@ -20,6 +20,7 @@ export default defineNuxtConfig({
         appUrl: process.env.APP_URL,
         bigmailerApi: process.env.BIGMAILER_API,
         brandId: process.env.BRAND_ID,
+        redisUrl: process.env.REDIS_URL,
         public: {
             appUrl: process.env.APP_URL,
         }

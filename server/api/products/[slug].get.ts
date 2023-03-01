@@ -1,5 +1,6 @@
 import { sendError } from "h3";
 import { getProductBySlug } from "~~/server/db/products";
+import redis from "~~/server/utils/redis";
 
 export default defineEventHandler(async (event) => {
     const { slug } = event.context.params;
@@ -12,6 +13,12 @@ export default defineEventHandler(async (event) => {
                 statusMessage: "Missing slug requirement",
             })
         );
+    }
+
+    const cached = await redis.get(`getsmurf:product:${slug}`);
+
+    if (cached) {
+        return JSON.parse(cached)
     }
 
     const product = await getProductBySlug(slug);
@@ -27,6 +34,8 @@ export default defineEventHandler(async (event) => {
     }
 
     (product.Accounts as any) = product.Accounts.length;
+
+    await redis.setex(`getsmurf:product:${slug}`, 60 * 60 * 168, JSON.stringify(product))
 
     return product
 });
