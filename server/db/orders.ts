@@ -455,3 +455,57 @@ export const updateOrderSkin = async (id: string, skinId: string) => {
         },
     })
 }
+
+export const getRevenue = async (start: Date, end: Date) => {
+    return prisma.$transaction([
+        prisma.order.aggregate({
+            where: {
+                AND: [
+                    {
+                        createdAt: {
+                            gte: start,
+                        },
+                    },
+                    {
+                        createdAt: {
+                            lte: end,
+                        },
+                    },
+                    {
+                        status: 'PAID'
+                    }
+                ],
+            },
+            _sum: {
+                total: true,
+            },
+        }),
+        // prisma get all paid orders for each day in range separated by day
+        prisma.order.findMany({
+            where: {
+                AND: [
+                    {
+                        createdAt: {
+                            gte: start,
+                        },
+                    },
+                    {
+                        createdAt: {
+                            lte: end,
+                        },
+                    },
+                    {
+                        status: 'PAID'
+                    }
+                ],
+            },
+            orderBy: {
+                createdAt: 'asc',
+            },
+            select: {
+                createdAt: true,
+                total: true,
+            },
+        }),
+    ])
+}

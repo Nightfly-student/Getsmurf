@@ -4,7 +4,7 @@ import dynamicRoutes from './helpers/dynamicRoutes'
 export default defineNuxtConfig({
     modules: ['@nuxtjs/tailwindcss', '@funken-studio/sitemap-nuxt-3'],
     build: {
-        transpile: ["@heroicons/vue"],
+        transpile: ["@heroicons/vue", "chart.js"],
     },
     css: ["@/assets/css/global.css"],
     runtimeConfig: {
