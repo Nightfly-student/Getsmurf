@@ -32,6 +32,14 @@
                             </NavTab>
                         </li>
                         <li>
+                            <NavTab link="/admin/users">
+                                <template v-slot:icon>
+                                    <UserGroupIcon />
+                                </template>
+                                <template v-slot:link> Users </template>
+                            </NavTab>
+                        </li>
+                        <li>
                             <NavTab link="/admin/licences">
                                 <template v-slot:icon>
                                     <UserIcon />
@@ -76,6 +84,7 @@ import NewspaperIcon from "@heroicons/vue/24/outline/NewspaperIcon";
 import PaperClipIcon from "@heroicons/vue/24/outline/PaperClipIcon";
 import UserIcon from "@heroicons/vue/24/outline/UserIcon";
 import BuildingStorefrontIcon from "@heroicons/vue/24/outline/BuildingStorefrontIcon";
+import UserGroupIcon from "@heroicons/vue/24/outline/UserGroupIcon";
 </script>
 
 <style scoped>

@@ -104,7 +104,7 @@
                         Blog
                     </NuxtLink>
                 </li>
-                <li v-if="logged && user?.role === 'ADMIN'">
+                <li v-if="logged && user?.roles.some((role) => role.roleName === 'ADMIN')">
                     <NuxtLink to="/admin">
                         Admin Panel
                     </NuxtLink>

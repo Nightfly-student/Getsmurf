@@ -18,7 +18,7 @@ export default defineEventHandler(async (event) => {
 
     const user = await getUserByEmail(email)
 
-    if (user) {
+    if (user && user.password !== null) {
         return sendError(event, createError({ statusCode: 400, statusMessage: 'User already exists' }))
     }
 

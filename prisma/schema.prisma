@@ -14,11 +14,36 @@ datasource db {
 model User {
   id String @id @default(uuid())
   email String @unique
-  password String
-  role Role @default(USER)
+  password String?
+
+  roles RoleItem[] 
 
   refreshToken RefreshToken[]
   posts Blog[]
+  orders Order[]
+  affiliate Affiliate?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model RoleItem {
+  user User @relation(fields: [userEmail], references: [email])
+  userEmail String
+
+  role Role @relation(fields: [roleName], references: [name])
+  roleName String
+
+  @@id([userEmail, roleName])
+}
+
+model Role {
+  id String @id @default(uuid())
+  
+  name String @unique
+  description String
+
+  users RoleItem[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -148,7 +173,8 @@ model License {
 model Order {
   id String @id @default(uuid())
 
-  billingEmail String
+  user User @relation(fields: [billingEmail], references: [email])
+  billingEmail String @default("even1spelen@gmail.com")
 
   productId String?
   product Product? @relation(fields: [productId], references: [slug], onDelete: SetNull)
@@ -157,6 +183,9 @@ model Order {
   skin Skin? @relation(fields: [skinName], references: [name], onDelete: SetNull, onUpdate: Cascade)
 
   accounts Account[]
+
+  affiliateId String?
+  affiliate Affiliate? @relation(fields: [affiliateId], references: [id], onDelete: SetNull)
 
   total Float
   quantity Int
@@ -241,6 +270,42 @@ model Coupon {
 
   Order Order[]
 
+  affiliateId String? @unique
+  affiliate Affiliate? @relation(fields: [affiliateId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Affiliate {
+  id String @id @default(uuid())
+
+  name String @unique
+
+  balance Float @default(0.00)
+  totalEarnings Float @default(0.00)
+  percent Float @default(0.00)
+
+  coupon Coupon?
+  order Order[]
+  withdrawal Withdrawal[]
+
+  user User @relation(fields: [userId], references: [id])
+  userId String @unique
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Withdrawal {
+  id String @id @default(uuid())
+
+  amount Float
+  status WithdrawalStatus @default(PENDING)
+
+  affiliateId String
+  affiliate Affiliate @relation(fields: [affiliateId], references: [id])
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
@@ -255,9 +320,10 @@ enum BlogStatus {
   PUBLISHED
 }
 
-enum Role {
-  ADMIN
-  USER
+enum WithdrawalStatus {
+  PENDING
+  COMPLETED
+  CANCELLED
 }
 
 enum Region {

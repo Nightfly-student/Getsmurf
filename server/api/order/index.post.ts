@@ -89,7 +89,7 @@ export default defineEventHandler(async (event) => {
             return session.url
         }
     } catch (error) {
-        return sendError(event, createError({ statusCode: 400, statusMessage: error }))
+        return sendError(event, createError({ statusCode: 400, statusMessage: '' + error }))
     }
 
 

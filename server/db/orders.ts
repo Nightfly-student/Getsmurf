@@ -4,7 +4,16 @@ import { prisma } from ".";
 export const createOrder = async (data: any) => {
     return prisma.order.create({
         data: {
-            billingEmail: data.billingEmail,
+            user: {
+                connectOrCreate: {
+                    where: {
+                        email: data.billingEmail,
+                    },
+                    create: {
+                        email: data.billingEmail,
+                    },
+                },
+            },
             quantity: data.quantity,
             ...!data.skin && {
                 product: {

@@ -3,7 +3,7 @@ import { H3Event } from "h3";
 import { sendError } from "h3";
 
 export const isAdminOrAbove = (user: User, event: H3Event) => {
-    if (user.role === "ADMIN") {
+    if (user.roles.some((role) => role.roleName === "ADMIN")) {
         return;
     } else {
         return sendError(
