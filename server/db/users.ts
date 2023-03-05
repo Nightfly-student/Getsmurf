@@ -91,3 +91,64 @@ export const getUsers = async (q: string, take: number, skip: number) => {
         })
     ])
 }
+
+export const getRoles = async (q: string) => {
+    return prisma.$transaction([
+        prisma.role.count({
+            where: {
+                OR: [
+                    {
+                        name: {
+                            contains: q,
+                            mode: 'insensitive'
+                        }
+                    },
+                ]
+            }
+        }),
+        prisma.role.findMany({
+            where: {
+                OR: [
+                    {
+                        name: {
+                            contains: q,
+                            mode: 'insensitive'
+                        }
+                    },
+                ]
+            },
+            select: {
+                name: true,
+            },
+            orderBy: {
+                createdAt: 'desc'
+            }
+        })
+    ])
+}
+
+export const upsertRole = async (email: string, role: string) => {
+    return prisma.user.update({
+        where: {
+            email
+        },
+        data: {
+            roles: {
+                create: {
+                    roleName: role
+                }
+            }
+        }
+    })
+}
+
+export const deleteRole = async (email: string, role: string) => {
+    return prisma.roleItem.delete({
+        where: {
+            userEmail_roleName: {
+                userEmail: email,
+                roleName: role
+            }
+        }
+    })
+}

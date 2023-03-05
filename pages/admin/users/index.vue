@@ -15,7 +15,7 @@
                 </template>
                 <template #body>
                     <TableTrBody v-for="user in (users as any)" :key="user.id" :hasHover="true"
-                        class="border-b-2 border-gray-200 dark:border-gray-600">
+                        @click="toggleModal('adminUser', user)" class="border-b-2 border-gray-200 dark:border-gray-600">
                         <TableTh>{{ user.email }}</TableTh>
                         <TableTh>{{ user.roles.map((role) => role.roleName) }}</TableTh>
                         <TableTh>{{ format(parseISO(user.createdAt), 'MMMM do, yyy') }}</TableTh>
@@ -24,6 +24,7 @@
             </Table>
             <Pagination class="mt-3" :pages="pages" :current="page" @onClick="paginationCall" />
         </div>
+        <ModalAdminUser :open="data.adminUser" :user="selectedUser" @modalEvent="toggleModal('adminUser')" />
     </div>
 </template>
 
@@ -34,6 +35,19 @@ definePageMeta({
     layout: "admin",
     middleware: ["admin-only"],
 });
+
+const data = reactive({
+    adminUser: false,
+});
+
+const selectedUser = ref({});
+
+const toggleModal = (modal: string, user?: Object) => {
+    if (modal === "adminUser") {
+        data.adminUser = !data.adminUser;
+        if (user) selectedUser.value = user;
+    }
+};
 
 const q = ref("");
 const users = ref([]);
@@ -51,6 +65,7 @@ const fetchOrders = async () => {
         pages.value = res.pages
         isLoading.value = false;
     })
+    selectedUser.value = users.value[0]
 }
 
 const onSearchChange = async (val: string) => {

@@ -20,7 +20,8 @@ export default defineEventHandler(async (event) => {
         '/api/order/admin/replace',
         '/api/order/admin/revenue',
         '/api/coupon/admin',
-        '/api/users'
+        '/api/users',
+        '/api/users/roles'
     ]
 
     const isHandledByThisMiddleware = endpoints.some(endpoint => {

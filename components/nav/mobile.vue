@@ -46,7 +46,7 @@
                 <li class="block px-4 py-2">
                     <a href="#" @click="mobileRouter($event, '/blog')">Blog</a>
                 </li>
-                <li class="block px-4 py-2" v-if="logged && user?.role === 'ADMIN'">
+                <li class="block px-4 py-2" v-if="logged && user?.roles.some((role) => role.roleName === 'ADMIN')">
                     <a href="#" @click="mobileRouter($event, '/admin')">Admin Panel</a>
                 </li>
                 <li class="block px-4 py-2">
