@@ -44,6 +44,9 @@ export const createUser = async (data: { email: string, password: string }) => {
                 }
             }
         },
+        include: {
+            roles: true
+        }
     })
 }
 
