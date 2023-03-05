@@ -24,7 +24,8 @@
             </Table>
             <Pagination class="mt-3" :pages="pages" :current="page" @onClick="paginationCall" />
         </div>
-        <ModalAdminUser :open="data.adminUser" :user="selectedUser" @modalEvent="toggleModal('adminUser')" />
+        <ModalAdminUser :open="data.adminUser" :user="selectedUser" @modalEvent="toggleModal('adminUser')"
+            @remove="onUpdateorRemove" @update="onUpdateorRemove" />
     </div>
 </template>
 
@@ -50,7 +51,7 @@ const toggleModal = (modal: string, user?: Object) => {
 };
 
 const q = ref("");
-const users = ref([]);
+const users: any = ref([]);
 const count = ref(0);
 const page = ref(1);
 const pages = ref(1);
@@ -75,6 +76,18 @@ const onSearchChange = async (val: string) => {
 }
 
 await fetchOrders();
+
+const onUpdateorRemove = (value: any) => {
+    users.value = users.value.map((user: any) => {
+        if (user.email === value[0].email) {
+            user.roles = []
+            value.forEach(change => {
+                user.roles.push({ roleName: change.name })
+            });
+        }
+        return user
+    })
+}
 
 async function paginationCall(num: number) {
     page.value = page.value + num;

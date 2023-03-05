@@ -8,7 +8,6 @@
                     :show-no-results="false" :hide-selected="true" @search-change="searchFunction" @select="onClick"
                     @remove="onRemove" />
             </div>
-            {{ selectedItems }}
         </div>
     </VField>
 </template>
@@ -96,6 +95,15 @@ function createDebounce() {
         }, delayMs || 500);
     };
 }
+
+watch(
+    () => props.selectedItems,
+    (oldVal, newVal) => {
+        if (oldVal[0].email !== newVal[0].email) {
+            selectedItems.value = oldVal;
+        }
+    }
+);
 </script>
 
 <style src="vue-multiselect/dist/vue-multiselect.css"></style>

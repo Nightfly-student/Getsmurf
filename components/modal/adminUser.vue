@@ -5,7 +5,7 @@
     }"
         class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 p-4 w-full bg-black/75 inset-0 h-modal h-full transition duration-500 ease-in-out">
         <div class="w-full md:w-fit absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-            <div class="relative bg-zinc-800 modalWidth mx-5 md:mx-0 rounded-lg shadow">
+            <div class="relative bg-zinc-800 md:modalWidth mx-5 md:mx-0 rounded-lg shadow">
                 <div class="flex justify-between gap-4 items-start rounded-t">
                     <h3 class="text-xl font-semibold text-white truncate">
                     </h3>
@@ -29,7 +29,7 @@
                             <span> {{ user.email }}</span>
                         </div>
                         <ClientOnly>
-                            <FormUserRoles :user="user" />
+                            <FormUserRoles :user="user" @update="onUpdate" @remove="onRemove" />
                         </ClientOnly>
                     </div>
                 </div>
@@ -49,9 +49,17 @@ const props = defineProps({
         required: true,
     },
 });
-const emits = defineEmits(["modalEvent"]);
+const emits = defineEmits(["modalEvent", "update", "remove"]);
 const clickOutside = () => {
     emits("modalEvent", false);
+};
+
+const onUpdate = (value: any) => {
+    emits("update", value);
+};
+
+const onRemove = (value: any) => {
+    emits("remove", value);
 };
 </script>
 

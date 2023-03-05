@@ -17,11 +17,12 @@
 </template>
 
 <script lang="ts" setup>
-import { object, string } from "yup";
 const data = reactive({
     loading: false,
     errorMsg: "",
 });
+
+const emits = defineEmits(['update', 'remove']);
 
 const props = defineProps<{
     user: any;
@@ -42,6 +43,7 @@ const onUpdate = async (value: any) => {
         })
 
     rolesList.value.push({ name: value.id, email: props.user.email });
+    emits('update', rolesList.value)
 };
 
 const onRemove = async (value: any) => {
@@ -49,6 +51,14 @@ const onRemove = async (value: any) => {
         method: 'DELETE',
         body: { role: value.id, email: props.user.email }
     })
-    rolesList.value = rolesList.value.filter((item: any) => item !== value.id);
+    rolesList.value = rolesList.value.filter((item: any) => item.name !== value.id);
+    emits('remove', rolesList.value)
 };
+
+watch(() => props.user, (newVal: any) => {
+    rolesList.value = [];
+    newVal.roles.forEach((role: any) => {
+        rolesList.value.push({ name: role.roleName, email: props.user.email });
+    });
+});
 </script>
