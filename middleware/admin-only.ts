@@ -12,7 +12,7 @@ export default defineNuxtRouteMiddleware(async (to, from) => {
         return abortNavigation();
     }
 
-    if (user.value.roles.some((role) => role.roleName !== "ADMIN")) {
+    if (!user.value.roles.some((role) => role.roleName === "ADMIN")) {
         if (process.server) {
             return navigateTo({ path: "/" });
         }
