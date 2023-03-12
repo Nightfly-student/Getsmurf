@@ -40,8 +40,7 @@
                         </tr>
                     </template>
                     <template #body>
-                        <TableTrBody v-for="order in (orders as any)" :key="order.id" :hasHover="true"
-                            @click="navigateTo(`/admin/orders/${order.id}`)"
+                        <TableTrBody v-for="order in (orders as any)" :key="order.id"
                             class="border-b-2 border-gray-200 dark:border-gray-600">
                             <TableTh>{{ order.billingEmail }}</TableTh>
                             <TableTh>{{ order.product ? order.product.name : order.skin.name }}</TableTh>
