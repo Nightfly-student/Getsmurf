@@ -1,9 +1,12 @@
 import { sendError } from "h3";
+import { updateAffiliateOrderBalance } from "~~/server/db/affiliates";
 import { updateCouponUses } from "~~/server/db/coupons";
 import { getAccountsByProductSlug, getOrderAdmin, getOrderByOrderIdWebhook, updateOrderAccount } from "~~/server/db/orders";
 import { getProductBySkinName } from "~~/server/db/products";
 import { isAdminOrAbove } from "~~/server/db/roleManager";
+import { sendOrderCompletedAffiliateMail } from "~~/server/utils/mailing/orderCompletedAffiliate";
 import { sendOrderSuccessEmail } from "~~/server/utils/mailing/orderSuccess";
+import { deleteMultipleKeys } from "~~/server/utils/redis/deleteMultiple";
 
 export default defineEventHandler(async (event) => {
     isAdminOrAbove(event.context.auth?.user, event)
@@ -120,6 +123,14 @@ export default defineEventHandler(async (event) => {
             order.product ? order.product?.name : `${order.skin?.name} - ${(session.metadata as any).region}`,
             `${config.appUrl}/orders/${order.id}`
         )
+
+        if (order.affiliateOrder) {
+            await updateAffiliateOrderBalance(order.affiliateOrder.affiliate.name, order.affiliateOrder.recievingAmount)
+            await sendOrderCompletedAffiliateMail(order.affiliateOrder.affiliate.user.email, order.affiliateOrder.affiliate.name, order.affiliateOrder.recievingAmount)
+        }
+
+        deleteMultipleKeys('getsmurf:products*')
+        deleteMultipleKeys('getsmurf:product*')
 
         const updatedOrder = await getOrderAdmin(order.id)
 
