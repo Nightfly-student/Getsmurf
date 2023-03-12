@@ -2,12 +2,12 @@
     <div>
         Hi, {{ affiliate.name }}
         <div class="grid grid-cols-12 gap-5">
-            <div class="col-span-8">
+            <div class="lg:col-span-8 col-span-12">
                 <div class="bg-zinc-800 p-5 rounded-20 shadow-sm mb-5 mt-5">
                     <ChartAffiliateRevenueLine />
                 </div>
             </div>
-            <div class="col-span-4">
+            <div class="lg:col-span-4 col-span-12">
                 <div class="bg-zinc-800 p-5 rounded-20 shadow-sm mb-5 mt-5">
                     <h2>Your Current Balance:</h2>
                     <p class="text-center text-3xl font-semibold">&euro;<span class="pl-1">{{ affiliate.balance.toFixed(2)
