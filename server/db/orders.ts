@@ -344,6 +344,15 @@ export const getOrderAdmin = async (id: string) => {
                     description: true,
                 }
             },
+            affiliateOrder: {
+                select: {
+                    affiliate: {
+                        select: {
+                            name: true,
+                        }
+                    }
+                }
+            },
             skin: {
                 select: {
                     name: true,

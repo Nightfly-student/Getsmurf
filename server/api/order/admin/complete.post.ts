@@ -151,6 +151,7 @@ export default defineEventHandler(async (event) => {
 
         return updatedOrder
     } catch (err: any) {
+
         return sendError(
             event,
             createError({

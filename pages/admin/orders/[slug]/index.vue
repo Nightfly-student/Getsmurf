@@ -35,6 +35,14 @@
                         </li>
                         <li class="flex justify-between">
                             <p>
+                                Affiliate:
+                            </p>
+                            <p class="font-semibold">
+                                {{ order.affiliateOrder ? order.affiliateOrder.affiliate.name : 'None' }}
+                            </p>
+                        </li>
+                        <li class="flex justify-between">
+                            <p>
                                 Total:
                             </p>
                             <p class="font-semibold">
@@ -137,7 +145,8 @@
                 </div>
             </div>
         </div>
-        <ModalReplaceAccount :account="selectedAccount" :open="data.toggleModal" @modalEvent="toggleModal" />
+        <ModalReplaceAccount v-if="order.status === 'PAID'" :account="selectedAccount" :open="data.toggleModal"
+            @modalEvent="toggleModal" />
     </div>
 </template>
 
