@@ -99,9 +99,7 @@ function createDebounce() {
 watch(
     () => props.selectedItems,
     (oldVal, newVal) => {
-        if (oldVal[0].email !== newVal[0].email) {
-            selectedItems.value = oldVal;
-        }
+        selectedItems.value = oldVal
     }
 );
 </script>
