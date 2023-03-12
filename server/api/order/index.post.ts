@@ -1,13 +1,14 @@
 import { sendError } from "h3";
 import { number, object, string } from "yup"
-import { createOrder, createPaymentSession } from "~~/server/db/orders";
+import { getAffiliateByNameOrder } from "~~/server/db/affiliates";
+import { createAffiliateOrder, createOrder, createPaymentSession } from "~~/server/db/orders";
 import { getProductBySkinName, getProductBySlug } from "~~/server/db/products";
 import { createStripeCheckoutSession } from "~~/server/utils/stripe";
 
 export default defineEventHandler(async (event) => {
     const body = await readBody(event);
 
-    const { productSlug, billingEmail, paymentMethod, quantity, skin, region, coupon } = body;
+    const { productSlug, billingEmail, paymentMethod, quantity, skin, region, coupon, affiliate } = body;
 
     if (!productSlug || !billingEmail || !paymentMethod || !quantity) {
         return sendError(event, createError({ statusCode: 400, statusMessage: 'Invalid params' }))
@@ -36,7 +37,8 @@ export default defineEventHandler(async (event) => {
             total: product.Skins[0].skin.rarity === 'kLegendary' ? 14.99 : product.Skins[0].skin.rarity === 'kEpic' ? 10.49 : product.Skins[0].skin.rarity === 'kRare' ? 9.99 : product.Skins[0].skin.rarity === 'kMythic' ? 12.49 : 8.95,
             skin,
             region,
-            coupon
+            coupon,
+            affiliate
         }
 
     } else {
@@ -56,7 +58,8 @@ export default defineEventHandler(async (event) => {
             productSlug,
             total: product.price * quantity,
             region,
-            coupon
+            coupon,
+            affiliate
         }
     }
 
@@ -74,6 +77,15 @@ export default defineEventHandler(async (event) => {
 
         if (!order) {
             return sendError(event, createError({ statusCode: 400, statusMessage: 'Failed to create order' }))
+        }
+
+        if (orderData.affiliate) {
+            const affiliate = await getAffiliateByNameOrder(orderData.affiliate)
+
+            if (affiliate) {
+                const recievingAmount = (orderData.total / 100 * (affiliate.percent)).toFixed(2)
+                await createAffiliateOrder(affiliate.name, order.id, parseFloat(recievingAmount))
+            }
         }
 
 

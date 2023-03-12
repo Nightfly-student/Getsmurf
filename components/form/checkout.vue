@@ -114,6 +114,7 @@ const checkout = async (e: Event, values: any) => {
             },
             region: props.product.region,
             coupon: coupon.value,
+            affiliate: localStorage.getItem('referral') ? localStorage.getItem('referral') : null,
         })
     })
 
@@ -129,10 +130,13 @@ const checkout = async (e: Event, values: any) => {
 const handleBlur = async (value: string) => {
     if (value.length > 0) {
         data.loading = true
-        await $fetch(`/api/coupon/${value}`).then((res) => {
+        await $fetch(`/api/coupon/${value}`).then((res: any) => {
             price.value = props.product.price - (props.product.price / 100 * (res.discount as number))
             data.errorMsg = 'Successfully applied coupon!'
             coupon.value = res.code
+            if (res.affiliate) {
+                localStorage.setItem('referral', res.affiliate)
+            }
         }).catch((err) => {
             data.errorMsg = err.response.statusText
             price.value = props.product.price

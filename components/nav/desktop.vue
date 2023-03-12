@@ -109,6 +109,11 @@
                         Admin Panel
                     </NuxtLink>
                 </li>
+                <li v-if="logged && user?.roles.some((role) => role.roleName === 'AFFILIATE')">
+                    <NuxtLink to="/affiliate">
+                        Affiliate Panel
+                    </NuxtLink>
+                </li>
             </ul>
         </div>
     </nav>

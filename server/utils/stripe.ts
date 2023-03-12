@@ -8,6 +8,8 @@ import { sendOrderFailedEmail } from "./mailing/orderFail";
 import { sendOrderSuccessEmail } from "./mailing/orderSuccess";
 import { updateCouponUses } from "../db/coupons";
 import { deleteMultipleKeys } from "./redis/deleteMultiple";
+import { updateAffiliateOrderBalance } from "../db/affiliates";
+import { sendOrderCompletedAffiliateMail } from "./mailing/orderCompletedAffiliate";
 
 const stripe = () => {
     const config = useRuntimeConfig();
@@ -211,6 +213,11 @@ export const handleStripeEvent = async (
 
                 deleteMultipleKeys('getsmurf:products*')
                 deleteMultipleKeys('getsmurf:product*')
+
+                if (order.affiliateOrder) {
+                    await updateAffiliateOrderBalance(order.affiliateOrder.affiliate.name, order.affiliateOrder.recievingAmount)
+                    await sendOrderCompletedAffiliateMail(order.affiliateOrder.affiliate.user.email, order.affiliateOrder.affiliate.name, order.affiliateOrder.recievingAmount)
+                }
 
                 return "Stripe webhook success";
             } catch (err: any) {

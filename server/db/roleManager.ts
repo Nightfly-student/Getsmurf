@@ -15,3 +15,17 @@ export const isAdminOrAbove = (user: User, event: H3Event) => {
         );
     }
 };
+
+export const isAffiliate = (user: User, event: H3Event) => {
+    if (user.roles.some((role) => role.roleName === "AFFILIATE")) {
+        return;
+    } else {
+        return sendError(
+            event,
+            createError({
+                statusCode: 401,
+                statusMessage: "Premission denied",
+            })
+        );
+    }
+}

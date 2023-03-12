@@ -21,7 +21,11 @@ export default defineEventHandler(async (event) => {
         '/api/order/admin/revenue',
         '/api/coupon/admin',
         '/api/users',
-        '/api/users/roles'
+        '/api/users/roles',
+        '/api/affiliate',
+        '/api/affiliate/create',
+        '/api/affiliate/chart/revenue',
+        '/api/affiliate/orders'
     ]
 
     const isHandledByThisMiddleware = endpoints.some(endpoint => {

@@ -71,6 +71,11 @@ export const getCouponByCode = async (code: string) => {
             uses: true,
             expiresAt: true,
             discount: true,
+            affiliate: {
+                select: {
+                    name: true,
+                }
+            }
         }
     });
 }

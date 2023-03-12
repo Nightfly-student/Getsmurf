@@ -110,6 +110,21 @@ export const getOrderByOrderIdWebhook = async (id: string) => {
                     }
                 }
             },
+            affiliateOrder: {
+                select: {
+                    recievingAmount: true,
+                    affiliate: {
+                        select: {
+                            name: true,
+                            user: {
+                                select: {
+                                    email: true,
+                                },
+                            }
+                        }
+                    },
+                },
+            },
             product: {
                 select: {
                     name: true,
@@ -517,4 +532,168 @@ export const getRevenue = async (start: Date, end: Date) => {
             },
         }),
     ])
+}
+
+export const getAffiliateRevenue = async (start: Date, end: Date, affiliateId: string) => {
+    return prisma.$transaction([
+        prisma.affiliateOrder.aggregate({
+            where: {
+                AND: [
+                    {
+                        createdAt: {
+                            gte: start,
+                        },
+                    },
+                    {
+                        createdAt: {
+                            lte: end,
+                        },
+                    },
+                    {
+                        affiliate: {
+                            userId: affiliateId
+                        }
+                    },
+                    {
+                        order: {
+                            status: 'PAID'
+                        }
+                    }
+                ],
+            },
+            _sum: {
+                recievingAmount: true,
+            },
+        }),
+        // prisma get all paid orders for each day in range separated by day
+        prisma.order.findMany({
+            where: {
+                AND: [
+                    {
+                        createdAt: {
+                            gte: start,
+                        },
+                    },
+                    {
+                        createdAt: {
+                            lte: end,
+                        },
+                    },
+                    {
+                        status: 'PAID'
+                    },
+                    {
+                        affiliateOrder: {
+                            affiliate: {
+                                userId: affiliateId
+                            }
+                        }
+                    }
+                ],
+            },
+            orderBy: {
+                createdAt: 'asc',
+            },
+            select: {
+                createdAt: true,
+                affiliateOrder: {
+                    select: {
+                        recievingAmount: true,
+                    },
+                }
+            },
+        }),
+        prisma.affiliate.findUnique({
+            where: {
+                userId: affiliateId
+            },
+        }),
+    ])
+}
+
+export const getAffiliateOrders = async (q: string, take: number, skip: number, userId: string) => {
+    return prisma.$transaction([
+        prisma.order.count({
+            where: {
+                AND: [
+                    {
+                        billingEmail: {
+                            contains: q,
+                            mode: 'insensitive',
+                        },
+                    },
+                    {
+                        affiliateOrder: {
+                            affiliate: {
+                                userId,
+                            }
+                        }
+                    }
+                ]
+            },
+        }),
+        prisma.order.findMany({
+            where: {
+                AND: [
+                    {
+                        billingEmail: {
+                            contains: q,
+                            mode: 'insensitive',
+                        },
+                    },
+                    {
+                        affiliateOrder: {
+                            affiliate: {
+                                userId,
+                            }
+                        }
+                    }
+                ]
+            },
+            take: take,
+            skip: skip,
+            orderBy: {
+                createdAt: 'desc',
+            },
+            select: {
+                id: true,
+                status: true,
+                billingEmail: true,
+                quantity: true,
+                affiliateOrder: {
+                    select: {
+                        recievingAmount: true,
+                    },
+                },
+                product: {
+                    select: {
+                        name: true,
+                    }
+                },
+                skin: {
+                    select: {
+                        name: true,
+                    },
+                },
+            },
+        })
+    ])
+}
+
+export const createAffiliateOrder = async (affiliateName: string, orderId: string, recievingAmount: number) => {
+    return prisma.affiliateOrder.create({
+        data: {
+            affiliate: {
+                connect: {
+                    name: affiliateName,
+                }
+            },
+            order: {
+                connect: {
+                    id: orderId,
+                }
+            },
+            recievingAmount,
+        },
+    })
 }

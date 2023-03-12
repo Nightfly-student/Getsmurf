@@ -50,5 +50,6 @@ export default defineEventHandler(async (event) => {
     return {
         code: coupon.code,
         discount: coupon.discount,
+        affiliate: coupon.affiliate ? coupon.affiliate.name : null,
     }
 })

@@ -6,7 +6,12 @@ export const getUserById = async (id: string) => {
             id
         },
         include: {
-            roles: true
+            roles: true,
+            affiliate: {
+                select: {
+                    id: true,
+                }
+            }
         }
     })
 }

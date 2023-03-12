@@ -57,6 +57,11 @@ const onRemove = async (value: any) => {
 
 watch(() => props.user, (newVal: any) => {
     rolesList.value = [];
+    if (!newVal.roles) {
+        props.user.roles.forEach(role => {
+            rolesList.value.push({ name: role.roleName, email: props.user.email });
+        });
+    }
     newVal.roles.forEach((role: any) => {
         rolesList.value.push({ name: role.roleName, email: props.user.email });
     });

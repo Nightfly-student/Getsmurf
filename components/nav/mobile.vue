@@ -49,6 +49,10 @@
                 <li class="block px-4 py-2" v-if="logged && user?.roles.some((role) => role.roleName === 'ADMIN')">
                     <a href="#" @click="mobileRouter($event, '/admin')">Admin Panel</a>
                 </li>
+                <li class="block px-4 py-2" v-if="logged && user?.roles.some((role) => role.roleName === 'AFFILIATE')">
+                    <a href="#" @click="mobileRouter($event, '/affiliate')">Affiliate Panel</a>
+                </li>
+
                 <li class="block px-4 py-2">
                     <!-- Tailwind Dropdown of Account categories -->
                     <button @click="toggleDropdown">
